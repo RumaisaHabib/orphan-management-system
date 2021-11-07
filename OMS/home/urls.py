@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
-import views
+from . import views
 
 urlpatterns = [
-    re_path(r'^index/$', views.index, name='index'),
+    path('index/', views.index, name='index'),
 ]
