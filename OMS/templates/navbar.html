@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <title>Orphan Management System</title>
 </head>
-<body>
-    {% extends 'navbar.html'%}
-    {% block content %}
-        <h1>Hello World</h1>
-    {% endblock %}
-</body>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">OMS</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn">Login</a></li>
+        <li><a class="waves-effect waves-light btn-large">Signup</a></li>
+      </ul>
+    </div>
+  </nav>
+{% block content %}
+{% endblock %}
 </html>
