@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpRequest
 from django.db import connection
 
@@ -12,6 +12,6 @@ def signup(request):
         sql = fr"INSERT INTO Users ('Email', 'Password') VALUES ('{email}', '{pwd}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
-        return render(request, "signup/signup.html")
+        return redirect('home:index')
     return render(request, "signup/signup.html")
     
