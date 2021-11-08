@@ -1,5 +1,6 @@
 {% extends 'navbar.html'%}
 {% block content %}
+
 <body>
 <div class = "center-align">
         <div class="row">
@@ -7,7 +8,8 @@
                   <div class="card">
                     <div class="card-content">
                       <span class="card-title"><h3>Login</h3></span>
-                        <form class="container">
+                        <form class="container" method="POST">
+                        {% csrf_token %}
                           <div class = "row">
   
                             <div class="input-field col s12">
