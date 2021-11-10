@@ -1,0 +1,12 @@
+{% extends 'navbar.html'%}
+{% block content %}
+<body>
+    {% for orphan in orphans %}
+    <div class="orphan">
+        <ul>
+            <li>{{orphan.email}}</li>
+        </ul>
+    </div>
+    {% endfor %}
+</body>
+{% endblock %}

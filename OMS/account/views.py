@@ -18,13 +18,8 @@ def login(request):
                     print("Successfully logged in")
                     request.session['logged_in'] = 1
                     request.session['usertype'] = utype
-                    return redirect('myadmin:myadmin_home')
-            return redirect('home:index')
-
-            # Redirect command redirects the page to specified url. helps stop that error of needing to reload page when
-            # you submit something. For log in need to make two kinds of redirects. if successful redirect to success
-            # page. If unsuccessful redirect to failure page.
-            
+                    return redirect('myadmin:myadmin_home') # This should redirect to success page or back home
+            return redirect('home:index') # This branch will be for failure
     
     else:
         if request.session.get("logged_in")==1:
