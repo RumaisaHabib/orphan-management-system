@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'login',
     'signup',
+    'myadmin',
 ]
 
 MIDDLEWARE = [

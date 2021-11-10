@@ -14,7 +14,9 @@ def login(request):
             sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{pwd}' AND Usertype = '{utype}';"
             with connection.cursor() as cursor:
                 cursor.execute(sql)
-                print(format_query(cursor.fetchall(), ["email", 'password', 'usertype']))
+                if len(cursor.fetchall()) > 0:
+                    print("Successfully logged in")
+                    return redirect('myadmin:myadmin_home')
             return redirect('home:index')
 
             # Redirect command redirects the page to specified url. helps stop that error of needing to reload page when
