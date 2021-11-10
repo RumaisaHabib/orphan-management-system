@@ -16,20 +16,24 @@ def login(request):
                 cursor.execute(sql)
                 if len(cursor.fetchall()) > 0:
                     print("Successfully logged in")
+                    request.session['logged_in'] = 1
+                    request.session['usertype'] = utype
                     return redirect('myadmin:myadmin_home')
             return redirect('home:index')
 
             # Redirect command redirects the page to specified url. helps stop that error of needing to reload page when
             # you submit something. For log in need to make two kinds of redirects. if successful redirect to success
             # page. If unsuccessful redirect to failure page.
-
-            #if success: 
-            request.session['logged_in'] = 1
-            request.session['usertype'] = utype
+            
     
     else:
         if request.session.get("logged_in")==1:
             print("you're already logged in")
             # another page rendered instead: to be made.
-            return render(request, "login/login.html")
-        return render(request, "login/login.html")
+            return render(request, "account/login.html")
+        return render(request, "account/login.html")
+
+def logout(request):
+    request.session["logged_in"] = 0
+    request.session["usertype"] = None
+    return redirect('home:index')
