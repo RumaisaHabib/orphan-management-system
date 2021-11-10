@@ -9,9 +9,17 @@ def signup(request):
         email = request.POST["email"]
         print(email)
         pwd = request.POST["password"]
-        sql = fr"INSERT INTO Users ('Email', 'Password') VALUES ('{email}', '{pwd}');"
+        utype = request.POST["usertype"]
+        sql = fr"INSERT INTO Users ('Email', 'Password', 'Usertype') VALUES ('{email}', '{pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
+            request.session['logged_in'] = 1
+            request.session['usertype'] = utype
         return redirect('home:index')
-    return render(request, "signup/signup.html")
+    else:
+        if request.session.get("logged_in")==1:
+            print("you're already logged in")
+            # another page rendered instead: to be made.
+            return render(request, "signup/signup.html")
+        return render(request, "signup/signup.html")
     
