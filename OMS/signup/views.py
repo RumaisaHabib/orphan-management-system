@@ -20,6 +20,6 @@ def signup(request):
         if request.session.get("logged_in")==1:
             print("you're already logged in")
             # another page rendered instead: to be made.
-            return render(request, "signup/signup.html")
+            return redirect('home:index')
         return render(request, "signup/signup.html")
     

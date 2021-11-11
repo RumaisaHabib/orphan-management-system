@@ -1,12 +1,23 @@
-{% extends 'navbar.html'%}
+{% extends nav %}
 {% block content %}
 <body>
+    
+    <div class = "center-align">
+        <div class="row">
+                <div class="col s4 push-s4">
+                    
+                        <span class="card-title"><h3>Orphans:</h3></span>
+                        <div class="card-content orange lighten-3">
+    <ol class="collection"></ul>
     {% for orphan in orphans %}
-    <div class="orphan">
-        <ul>
-            <li>{{orphan.email}}</li>
-        </ul>
-    </div>
+    
+        <li class="collection-item">{{orphan.email}}</li>
+    
     {% endfor %}
+</ol>
+</div>
+</div>
+</div>
+</div>
 </body>
 {% endblock %}
