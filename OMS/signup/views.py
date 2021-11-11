@@ -10,7 +10,7 @@ def signup(request):
         print(email)
         pwd = request.POST["password"]
         utype = request.POST["usertype"]
-        sql = fr"INSERT INTO Users ('Email', 'Password', 'Usertype') VALUES ('{email}', '{pwd}', '{utype}');"
+        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
             request.session['logged_in'] = 1
