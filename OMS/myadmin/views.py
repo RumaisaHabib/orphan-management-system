@@ -23,7 +23,7 @@ def orphans_list(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
 
-    if utype != 'admin' and not logged_in:
+    if utype != 'admin' or not logged_in:
         return render(request, 'myadmin/not_admin.html', {"nav": 'navbar.html'})
     else:
         navname = "logged_navbar.html"
