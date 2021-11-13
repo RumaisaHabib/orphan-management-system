@@ -32,3 +32,23 @@ def logout(request):
     request.session["logged_in"] = 0
     request.session["usertype"] = None
     return redirect('home:index')
+
+def change_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        pwd = request.POST['password']
+        pwd2 = request.POST['confirm password']
+        utype = request.session['usertype']
+        if pwd != pwd2:
+            return render(request, 'account/changefail.html')
+        sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Usertype = '{utype}';"
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            if len(cursor.fetchall()) > 0:
+                sql = fr"UPDATE Users SET Password = '{pwd}' WHERE Email = '{email}' AND Usertype = '{utype}'"
+                cursor.execute(sql)
+                print('here')
+                return render(request, 'account/changesuccess.html')
+        return render(request, 'account/changefail.html')
+    else:
+        return render(request, 'account/changepass.html')
