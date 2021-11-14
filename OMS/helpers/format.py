@@ -34,7 +34,7 @@ def executeSQL(sqlcom, colnames=[]):
         cursor.execute(sqlcom)
         data = cursor.fetchall()
 
-    if len(colnames) == 0:
+    if len(colnames) == 0 and len(data) != 0:
         colnames = ['col' + str(x + 1) for x in range(len(data[0]))]
 
     result = []

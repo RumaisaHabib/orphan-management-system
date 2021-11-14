@@ -1,6 +1,16 @@
 {% extends nav %}
 {% block content %}
-
+<style>
+    .hoverable-record
+    {
+        transition: background-color 0.5s;
+    }
+    .hoverable-record:hover
+    {
+        background-color: green;
+        cursor: pointer;
+    }
+</style>
 <body>
     <div class = "center-align">
         <div class="row">
@@ -16,7 +26,7 @@
                     </thead>
                     <tbody>
                         {% for orphan in orphans %}
-                            <tr>
+                            <tr class="hoverable-record" id="n{{orphan.CNIC}}">
                                 {% for key, value in orphan.items %}
                                     <td>{{value}}</td>
                                 {% endfor %}
@@ -28,5 +38,11 @@
         </div>
     </div>
 </body>
+<script>
+    $(".hoverable-record").click(function() {
+        var myid = $(this).attr('id').replace('#', '').replace('n', '');
+        window.location.replace("updateorph/id=" + myid);
+    });
+</script>
 
 {% endblock %}

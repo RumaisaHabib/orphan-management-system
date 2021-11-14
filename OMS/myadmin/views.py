@@ -36,18 +36,33 @@ def orphans_list(request):
     # # beauty lies in the heart. 
     
 def add_orphan(request):
+    return render(request, 'myadmin/add_orphan.html')
+
+def add_orphan_record(request):
     if request.method == "POST":
-        print(request.POST)
         CNIC = request.POST["CNIC"]
-        print(CNIC)
         Name = request.POST["name"]
         SpecialNeeds = request.POST["specialneeds"]
         DateOfBirth=request.POST["DateOfBirth"]
-        print(type(DateOfBirth))
         Education=request.POST["education"]
         Sex=request.POST["sex"]
         Hobbies=request.POST["hobbies"]
-        sql = fr"INSERT INTO Orphan (CNIC, Name, SpecialNeeds, DateOfBirth, Education, Sex, Hobbies) VALUES('{CNIC}', '{Name}', '{SpecialNeeds}','{DateOfBirth}', '{Education}', '{Sex}','{Hobbies}');"
+        sql = fr"INSERT INTO Orphan (CNIC, Name, SpecialNeeds, DateOfBirth, Education, Sex) VALUES('{CNIC}', '{Name}', '{SpecialNeeds}','{DateOfBirth}', '{Education}', '{Sex}');"
+        print([x for x in request.POST.items()])
         executeSQL(sql)
-    return render(request, 'myadmin/add_orphan.html')
     
+    return redirect('/myadmin/addorphan/')
+    
+def update_orphan(request, orphanid):
+    orphid = orphanid.split('=')[1]
+
+    sql = fr"select * from Orphan where CNIC='{orphid}'"
+    result = executeSQL(sql, ['CNIC', 'Name', 'SpecialNeeds', 'DateOfBirth', 'Education', 'Sex'])
+
+    # return update form template
+
+    # return redirect('/myadmin/orphanslist/')
+
+def update_record(request):
+    # sql("update Orphan where CNIC=id")
+    pass
