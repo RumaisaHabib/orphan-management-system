@@ -10,4 +10,5 @@ urlpatterns = [
     path('addorphan/', views.add_orphan, name="add_orphan"),
     path('addorphan/addorphrec/', views.add_orphan_record, name="add_orphan_record"),
     path('orphanslist/updateorph/<str:orphanid>/', views.update_orphan, name="update_orphan"),
+    path('orphanslist/updaterecord/', views.update_record, name="update_record"),
 ]
