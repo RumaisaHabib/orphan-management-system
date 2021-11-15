@@ -30,26 +30,26 @@ Potential parents can sign up and fill out an adoption application on the portal
 
 - [x] 1. Admitting new orphans
 - [x] 2. Updating Orphan info
-- [ ] 3. Mass Email
-- [ ] 4. Post-adoption request process
-- [ ] 5. Add new employees
+- [ ] 3. Mass Email - 
+- [ ] 4. Post-adoption request process - 
+- [ ] 5. Add new employees 
 - [ ] 6. Approve volunteer requests
-- [x] 7. View people’s information 
+- [ ] 7. View people’s information - 
 - [ ] 8. Fund management
-- [ ] 9. Notifying parents upon adoption result
+- [ ] 9. Notifying parents upon adoption result - 
 - [ ] 10. Update Information(Employee/volunteer)
 - [x] 11. Sign up
-- [ ] 12. Approve adoption application 
+- [ ] 12. Approve adoption application -
 - [x] 13. Login
 - [ ] 14. Apply for department role
 - [ ] 15. View department information
-- [ ] 16. Manage appointment
+- [ ] 16. Manage appointment - 
 - [ ] 17. Donation
 - [ ] 18. Feedback
 - [ ] 19. Download certificate
-- [ ] 20. View orphan list/add search filters
-- [ ] 21. Apply for adoption 
-- [ ] 22. Apply for appointment
+- [ ] 20. View orphan list/add search filters - 
+- [ ] 21. Apply for adoption -
+- [ ] 22. Apply for appointment - 
 - [x] 23. Update password
 
 ## Tech Stack Used
