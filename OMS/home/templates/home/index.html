@@ -1,6 +1,9 @@
 {% extends nav %}
 {% block content %}
 <body>
-        <h1>Hello World</h1>
+        {% if usertype == 'admin' %}
+                <h1>Hello {{usertype}}</h1>
+                <span><a href="/myadmin/">Admin</a></span>
+        {% endif %}
 </body>
 {% endblock %}

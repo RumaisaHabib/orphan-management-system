@@ -1,4 +1,4 @@
-{% extends 'navbar.html'%}
+{% extends nav %}
 {% block content %}
 
 <body>
@@ -40,8 +40,9 @@
                     <option value="" disabled selected>Choose your option</option>
                     <option value="M" {% if result.Sex in "Male" %}selected{% endif %}>Male</option>
                     <option value="F" {% if result.Sex in "Female"  %}selected{% endif %}>Female</option>
+                    <option value="X" {% if result.Sex in "Other"  %}selected{% endif %}>Other</option>
                   </select>
-                  <label>Gender </label>
+                  <label>Sex </label>
                 </div>
                                         
                 <div class="input-field col s12">

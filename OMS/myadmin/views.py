@@ -86,11 +86,14 @@ def update_orphan(request, orphanid):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
 
-    if utype != 'admin' or not logged_in:
-        return render(request, 'myadmin/not_admin.html', {"nav": 'navbar.html'})
+    if not logged_in:
+        navname = 'navbar.html'
     else:
         navname = "logged_navbar.html"
     
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+
     return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": navname})
     # return update form template
 

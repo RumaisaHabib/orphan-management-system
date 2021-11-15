@@ -18,7 +18,7 @@ def login(request):
                     print("Successfully logged in")
                     request.session['logged_in'] = 1
                     request.session['usertype'] = utype
-                    return redirect('myadmin:myadmin_home') # This should redirect to success page or back home
+                    return redirect('home:index') # This should redirect to success page or back home
             return redirect('home:index') # This branch will be for failure
     
     else:
@@ -36,7 +36,7 @@ def logout(request):
 def change_password(request):
     log = request.session['logged_in']
     if log == 0:
-        return redirect('myadmin:myadmin_home')
+        return redirect('home:index')
     if request.method == 'POST':
         email = request.POST['email']
         pwd = request.POST['password']
