@@ -23,10 +23,13 @@ def orphans_list(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
 
-    if utype != 'admin' or not logged_in:
-        return render(request, 'myadmin/not_admin.html', {"nav": 'navbar.html'})
-    else:
+    if logged_in:
         navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
 
     sql = f"SELECT * FROM Orphan"
     orphans = executeSQL(sql, ['CNIC', 'Name', 'Special Needs', 'Date of Birth', 'Education', 'Sex'])
@@ -36,7 +39,18 @@ def orphans_list(request):
     # # beauty lies in the heart. 
     
 def add_orphan(request):
-    return render(request, 'myadmin/add_orphan.html')
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if logged_in:
+        navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+    
+    return render(request, 'myadmin/add_orphan.html', {"nav": navname})
 
 def add_orphan_record(request):
     if request.method == "POST":
@@ -50,8 +64,18 @@ def add_orphan_record(request):
         sql = fr"INSERT INTO Orphan (CNIC, Name, SpecialNeeds, DateOfBirth, Education, Sex) VALUES('{CNIC}', '{Name}', '{SpecialNeeds}','{DateOfBirth}', '{Education}', '{Sex}');"
         print([x for x in request.POST.items()])
         executeSQL(sql)
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if logged_in:
+        navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
     
-    return redirect('/myadmin/addorphan/')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+    
+    return redirect('/myadmin/addorphan/', {"nav": navname})
     
 def update_orphan(request, orphanid):
     orphid = orphanid.split('=')[1]

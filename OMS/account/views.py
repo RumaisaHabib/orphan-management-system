@@ -36,7 +36,7 @@ def logout(request):
 def change_password(request):
     log = request.session['logged_in']
     if log == 0:
-        return render(request, 'account/changefail.html')
+        return redirect('myadmin:myadmin_home')
     if request.method == 'POST':
         email = request.POST['email']
         pwd = request.POST['password']
