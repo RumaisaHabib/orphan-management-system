@@ -8,11 +8,12 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title"><h3>Update orphan data</h3></span>
-            <form class="container" action= "updaterecord/" method="POST">
+            <form class="container" action= "../updaterecord/" method="POST">
               {% csrf_token %}
               <div class = "row">
-                <div class="input-field col s12">               
-                  <span>{{result.CNIC}}</span>
+                <div class="input-field col s12">
+                  <input type="hidden" id="CNIC" name="CNIC" value="{{result.CNIC}}">          
+                  <span><b>CNIC</b> {{result.CNIC}}</span>
                 </div>
                 <div class="input-field col s12">
                   <input name="name" id="name" type="text" value="{{result.Name}}" >

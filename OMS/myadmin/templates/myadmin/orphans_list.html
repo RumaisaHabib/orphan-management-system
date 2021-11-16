@@ -1,20 +1,33 @@
 {% extends nav %}
 {% block content %}
 <style>
+    table
+    {
+        margin: auto;
+        width: 60%;
+    }
+    tr:nth-child(even)
+    {
+        background-color: #e8e8e8;
+    }
+    td
+    {
+        border-radius: 0;
+    }
     .hoverable-record
     {
         transition: background-color 0.5s;
     }
     .hoverable-record:hover
     {
-        background-color: green;
+        background-color: lightcoral;
         cursor: pointer;
     }
 </style>
 <body>
     <div class = "center-align">
         <div class="row">
-            <div class="col s4 push-s4">
+            <div>
                 <span class="card-title"><h3>Orphans</h3></span>
                 <table>
                     <thead>
