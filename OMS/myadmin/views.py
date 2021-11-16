@@ -32,7 +32,7 @@ def orphans_list(request):
         return render(request, 'myadmin/not_admin.html', {"nav": navname})
 
     sql = f"SELECT * FROM Orphan"
-    orphans = executeSQL(sql, ['CNIC', 'Name', 'Special Needs', 'Date of Birth', 'Education', 'Sex'])
+    orphans = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'Special Needs'])
 
     return render(request, 'myadmin/orphans_list.html', {"orphans":orphans, "titles": list(orphans[0].keys()), "nav": navname}) # This will pass the orphans as a js object
     # Please prettify the html. 
@@ -83,7 +83,7 @@ def update_orphan(request, orphanid):
     orphid = orphanid.split('=')[1]
 
     sql = fr"select * from Orphan where CNIC='{orphid}'"
-    result = executeSQL(sql, ['CNIC', 'Name', 'SpecialNeeds', 'DateOfBirth', 'Education', 'Sex'])
+    result = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'Special Needs'])
     
     print("updating this orphan:", result)
     
