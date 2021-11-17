@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpRequest
 from django.db import connection
+import hashlib
 
 # Create your views here.
 def signup(request):
@@ -9,8 +10,9 @@ def signup(request):
         email = request.POST["email"]
         print(email)
         pwd = request.POST["password"]
+        hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
         utype = request.POST["usertype"]
-        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{pwd}', '{utype}');"
+        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{hashed_pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
             request.session['logged_in'] = 1

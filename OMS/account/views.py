@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpRequest
 from django.db import connection
 from helpers.format import format_query 
+import hashlib
 
 from home.views import index
 
@@ -10,8 +11,9 @@ def login(request):
     if request.method == "POST":
             email = request.POST["email"]
             pwd = request.POST["password"]
+            hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
             utype = request.POST["usertype"]
-            sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{pwd}' AND Usertype = '{utype}';"
+            sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{hashed_pwd}' AND Usertype = '{utype}';"
             with connection.cursor() as cursor:
                 cursor.execute(sql)
                 if len(cursor.fetchall()) > 0:
@@ -48,7 +50,8 @@ def change_password(request):
         with connection.cursor() as cursor:
             cursor.execute(sql)
             if len(cursor.fetchall()) > 0:
-                sql = fr"UPDATE Users SET Password = '{pwd}' WHERE Email = '{email}' AND Usertype = '{utype}'"
+                hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
+                sql = fr"UPDATE Users SET Password = '{hashed_pwd}' WHERE Email = '{email}' AND Usertype = '{utype}'"
                 cursor.execute(sql)
                 return render(request, 'account/changesuccess.html')
         return render(request, 'account/changefail.html')
