@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'account',
     'signup',
     'myadmin',
+    'feedback',
 ]
 
 MIDDLEWARE = [

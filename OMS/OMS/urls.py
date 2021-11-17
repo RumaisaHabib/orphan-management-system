@@ -21,5 +21,6 @@ urlpatterns = [
     path('account/', include("account.urls")),
     path('signup/', include("signup.urls")),
     path('myadmin/', include("myadmin.urls")),
+    path('feedback/', include("feedback.urls")),
     path('', include("home.urls")),
 ]
