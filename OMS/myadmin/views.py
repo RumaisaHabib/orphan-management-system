@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from helpers.format import format_query
 from helpers.format import executeSQL
+from helpers.navbar import which_nav
 
 # Create your views here.
 def admin(request):
@@ -66,17 +67,15 @@ def add_orphan_record(request):
         Hobbies=request.POST["hobbies"]
         sql = fr"INSERT INTO Orphan (CNIC, Name, SpecialNeeds, DateOfBirth, Education, Sex) VALUES('{CNIC}', '{Name}', '{SpecialNeeds}','{DateOfBirth}', '{Education}', '{Sex}');"
         print([x for x in request.POST.items()])
-        executeSQL(sql)
-    
-    if logged_in:
-        navname = "logged_navbar.html"
-    else:
-        navname = "navbar.html"
+        try:
+            executeSQL(sql)
+        except:
+            return render(request, 'myadmin/cnic_exists.html', {"nav": which_nav(request)})
     
     if utype != 'admin':
-        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     
-    return redirect('/myadmin/addorphan/', {"nav": navname})
+    return redirect('/myadmin/addorphan/', {"nav": which_nav(request)})
     
 def update_orphan(request, orphanid):
 
