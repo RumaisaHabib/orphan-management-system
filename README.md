@@ -25,6 +25,17 @@ Potential parents can sign up and fill out an adoption application on the portal
 - Volunteers
 - Guest User
 
+## How to run
+### Requirements
+- Django 
+- Python
+### Setup
+Download Run the following command to clone the project
+```
+git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
+```
+
+
 ## Use Cases
 ![image](https://user-images.githubusercontent.com/68891347/141086106-ba5e4311-298b-48b0-861c-b27f68d3ae60.png)
 
