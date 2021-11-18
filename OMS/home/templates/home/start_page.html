@@ -1,0 +1,61 @@
+{% extends nav %}
+{% block content %}
+
+<style>
+    body, html {
+    height: 100%;
+    margin: 0;  
+    }
+    
+    @keyframes transitionIn {
+        from {
+        }
+        to {
+            transform:translateX(0);
+        }
+        
+    }
+
+
+    .bck-img 
+    {
+
+        background-image: url(https://www.soschildrensvillages.ca/sites/default/files/7.jpg);
+
+        /* Full height */
+        height: 100%; 
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 0.5;
+    }
+    .title  
+    {  
+        animation: 2s transitionIn 0.5s forwards;
+        transform:translateX(-100%);
+
+        color: rgb(50, 75, 49);
+        font-size: 72px;
+        font-weight: bold;
+        position: absolute;
+        text-shadow: -1px -1px 0 rgb(245, 236, 236), 1px -1px 0 rgb(224, 220, 220), -1px 1px 0 rgb(211, 203, 203), 1px 1px 0 rgb(230, 222, 222);
+        
+        width: 1077px;
+        height: 318px;
+        left: calc(50% - 1077px/2 - 155.5px);
+        top: calc(75% - 318px/2 + 121px);
+
+        
+    }
+
+
+</style>
+<body>
+        <div  class="bck-img">
+
+        </div>
+        <h1 class = "title">Orphan Management System</h1>
+</body>
+{% endblock %}

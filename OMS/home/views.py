@@ -9,6 +9,8 @@ def index(request):
     if logged_in:
         navname = "logged_navbar.html"
         utype = request.session['usertype']
+        return render(request, "home/index.html", {"nav": navname, "usertype": utype})
     else:
         navname = "navbar.html"
-    return render(request, "home/index.html", {"nav": navname, "usertype": utype})
+        return render(request, "home/start_page.html", {"nav": navname, "usertype": utype})
+    
