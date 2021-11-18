@@ -14,7 +14,7 @@ def login(request):
             hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
             utype = request.POST["usertype"]
             if utype == 'admin':
-                sql = fr"SELECT * FROM Admin WHERE Email = '{email}' AND Password = '{pwd}' AND Usertype = '{utype}';"
+                sql = fr"SELECT * FROM Admin WHERE Email = '{email}' AND Password = '{hashed_pwd}';"
             else:
                 sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{hashed_pwd}' AND Usertype = '{utype}';"
             with connection.cursor() as cursor:
@@ -49,14 +49,25 @@ def change_password(request):
         utype = request.session['usertype']
         if pwd != pwd2:
             return render(request, 'account/changefail.html')
-        sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Usertype = '{utype}';"
-        with connection.cursor() as cursor:
-            cursor.execute(sql)
-            if len(cursor.fetchall()) > 0:
-                hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
-                sql = fr"UPDATE Users SET Password = '{hashed_pwd}' WHERE Email = '{email}' AND Usertype = '{utype}'"
+        if utype == 'admin':
+            sql = fr"SELECT * FROM Admin WHERE Email = '{email}';"
+            with connection.cursor() as cursor:
                 cursor.execute(sql)
-                return render(request, 'account/changesuccess.html')
-        return render(request, 'account/changefail.html')
+                if len(cursor.fetchall()) > 0:
+                    hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
+                    sql = fr"UPDATE Admin SET Password = '{hashed_pwd}' WHERE Email = '{email}'"
+                    cursor.execute(sql)
+                    return render(request, 'account/changesuccess.html')
+            return render(request, 'account/changefail.html')
+        else:
+            sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Usertype = '{utype}';"
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                if len(cursor.fetchall()) > 0:
+                    hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
+                    sql = fr"UPDATE Users SET Password = '{hashed_pwd}' WHERE Email = '{email}' AND Usertype = '{utype}'"
+                    cursor.execute(sql)
+                    return render(request, 'account/changesuccess.html')
+            return render(request, 'account/changefail.html')
     else:
         return render(request, 'account/changepass.html')
