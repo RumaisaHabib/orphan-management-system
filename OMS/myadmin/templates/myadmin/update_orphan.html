@@ -16,7 +16,7 @@
                   <span><b>CNIC</b> {{result.CNIC}}</span>
                 </div>
                 <div class="input-field col s12">
-                  <input name="name" id="name" type="text" value="{{result.Name}}" >
+                  <input name="name" id="name" type="text" value="{{result.Name}}" required>
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s12">
@@ -25,10 +25,10 @@
                 </div>
                 <div class="input-field col s12">
                   <label style="margin-top: -20px;" for="DateOfBirth">Date of Birth</label>
-                  <input name="DateOfBirth" id="DateOfBirth" type="datetime-local" value="{{result.DateOfBirth}}">
+                  <input name="DateOfBirth" id="DateOfBirth" type="datetime-local" value="{{result.DateOfBirth}}" required>
                 </div>
                 <div class="input-field col s12">
-                  <select name="education" selected="{{result.Education}}">
+                  <select name="education" selected="{{result.Education}}" required>
                     <option value="" disabled selected>Choose your option</option>
                     <option value="Kindergarten" {% if result.Education in "Kindergarten" %}selected{% endif %}>Kindergarten</option>
                     <option value="Nursery" {% if result.Education in "Nursery" %}selected{% endif %} >Nursery </option>
@@ -37,7 +37,7 @@
                   <label>Education</label>
                 </div>
                 <div class="input-field col s12">
-                  <select name="sex">
+                  <select name="sex" required>
                     <option value="" disabled selected>Choose your option</option>
                     <option value="M" {% if result.Sex in "Male" %}selected{% endif %}>Male</option>
                     <option value="F" {% if result.Sex in "Female"  %}selected{% endif %}>Female</option>

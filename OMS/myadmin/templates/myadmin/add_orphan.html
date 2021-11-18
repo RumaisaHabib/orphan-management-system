@@ -12,11 +12,11 @@
               {% csrf_token %}
               <div class = "row">
                 <div class="input-field col s12">
-                  <input name="CNIC" id="CNIC" type="text" >
+                  <input name="CNIC" id="CNIC" type="text" required>
                   <label for="CNIC">CNIC</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="name" id="name" type="text" >
+                  <input name="name" id="name" type="text" required>
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s12">
@@ -25,11 +25,11 @@
                 </div>
                 <div class="input-field col s12">
                   <label style="margin-top: -20px;" for="DateOfBirth">Date Of Birth</label>
-                  <input name="DateOfBirth" id="DateOfBirth" type="datetime-local" >
+                  <input name="DateOfBirth" id="DateOfBirth" type="datetime-local" required>
 
                 </div>
                 <div class="input-field col s12">
-                  <select name="education">
+                  <select name="education" required>
                     <option value="" disabled selected>Choose your option</option>
                     <option value="Kindergarten">Kindergarten</option>
                     <option value="Nursery">Nursery</option>
@@ -38,7 +38,7 @@
                   <label>Education </label>
                 </div>
                 <div class="input-field col s12">
-                  <select name="sex">
+                  <select name="sex" required>
                     <option value="" disabled selected>Choose your option</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
