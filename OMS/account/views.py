@@ -13,7 +13,10 @@ def login(request):
             pwd = request.POST["password"]
             hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
             utype = request.POST["usertype"]
-            sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{hashed_pwd}' AND Usertype = '{utype}';"
+            if utype == 'admin':
+                sql = fr"SELECT * FROM Admin WHERE Email = '{email}' AND Password = '{pwd}' AND Usertype = '{utype}';"
+            else:
+                sql = fr"SELECT * FROM Users WHERE Email = '{email}' AND Password = '{hashed_pwd}' AND Usertype = '{utype}';"
             with connection.cursor() as cursor:
                 cursor.execute(sql)
                 if len(cursor.fetchall()) > 0:
