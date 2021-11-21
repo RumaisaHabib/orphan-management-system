@@ -132,7 +132,7 @@ def update_request_view(request, applicationid):
     return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
 
     
-def update_request_view(request):
+def update_request(request):
     if request.method == 'POST':
         pass
     return redirect('/myadmin/orphanslist/')
