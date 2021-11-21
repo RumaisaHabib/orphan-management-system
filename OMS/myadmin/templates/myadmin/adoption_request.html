@@ -1,9 +1,6 @@
 {% extends nav %}
 {% block content %}
 
-{% extends nav %}
-{% block content %}
-
 <body>
   <div class = "center-align">
     <div class="row">
@@ -21,8 +18,8 @@
                 <div class="input-field col s12">
                     <select name="status" required>
                       <option value="" disabled selected>Choose your option</option>
-                      <option value="approve">Approve</option>
-                      <option value="deny">Deny</option>
+                      <option value="Approved">Approve</option>
+                      <option value="Denied">Deny</option>
                     </select>
                     <label>Status</label>
                 </div>                                        
@@ -45,7 +42,4 @@
   });
 
 </script>
-{% endblock %}
-
-
 {% endblock %}
