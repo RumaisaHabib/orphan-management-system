@@ -12,8 +12,12 @@
                         {% csrf_token %}
                           <div class = "row">
                             <div class="input-field col s12">
-                              <input  name="name" id="name" type="text">
-                              <label for="name">Name (optional)</label>
+                              <input  name="cnic" id="cnic" type="text">
+                              <label for="cnic">CNIC (optional)</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input  name="email" id="email" type="text">
+                              <label for="email">Email (optional)</label>
                             </div>
                             <div class="input-field col s12">
                                 <input name="feedback" id="feedback" type="text" required>
