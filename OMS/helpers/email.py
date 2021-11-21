@@ -9,6 +9,6 @@ def send_email(addresses, content, subject):
         subject,
         content,
         from_email='Deebee4206916@gmail.com',
-        recipient_list=['to@example.com'],
+        recipient_list=addresses,
         fail_silently=False,
     )
