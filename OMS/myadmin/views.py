@@ -144,6 +144,10 @@ def update_request(request):
         appid = request.POST['applicationid']
         sql = fr"UPDATE AdoptionRequest SET Status='{status}' WHERE ApplicationID='{appid}'"
         executeSQL(sql)
+        sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
+        address = executeSQL(sql, ['Email'])
+        send_email([address[0]['Email']], "Yellow is a primary colour", "whaddup")
+
     return redirect('myadmin:adoption-request-list')
 
 def mass_email(request):
