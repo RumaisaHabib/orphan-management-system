@@ -7,11 +7,12 @@
       <div class="col s4 push-s4">
         <div class="card">
           <div class="card-content">
-            <span class="card-title"><h3>Email:</h3></span>
+            <span class="card-title"><h3>Mass email:</h3></span>
             <form class="container" action="/myadmin/mass_email/" method="POST">
               {% csrf_token %}
               <div class = "row">
-                <textarea id="email-content" name="email-content" rows="10" cols="50" style="resize:none;width:100%;height:100%"></textarea>                       
+                <textarea id="email-subject" name="email-subject" rows="1" cols="50" style="resize:none;width:100%;height:100%">Subject</textarea>  
+                <textarea id="email-content" name="email-content" rows="10" cols="50" style="resize:none;width:100%;height:100%">Email</textarea>                       
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light" type="submit" name="action">
                     Send

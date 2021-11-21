@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from helpers.format import format_query
 from helpers.format import executeSQL
 from helpers.navbar import which_nav
+from helpers.email import send_email
 
 # Create your views here.
 def admin(request):
@@ -96,6 +97,8 @@ def update_orphan(request, orphanid):
 def update_record(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     # sql("update Orphan where CNIC=id")
     if request.method == "POST":
         CNIC = request.POST["CNIC"]
@@ -133,6 +136,9 @@ def update_request_view(request, applicationid):
 
     
 def update_request(request):
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     if request.method == 'POST':
         status = request.POST['status']
         appid = request.POST['applicationid']
@@ -141,9 +147,16 @@ def update_request(request):
     return redirect('myadmin:adoption-request-list')
 
 def mass_email(request):
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     if request.method == 'POST':
         content = request.POST['email-content']
-        print(content)
+        subject = request.POST['email-subject']
+        sql = fr"SELECT Email FROM Users"
+        addresses = executeSQL(sql, ['Email', 'Password', 'Usertype'])
+        send_email(addresses, content, subject)
+        return redirect('/myadmin/')
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
         
     
