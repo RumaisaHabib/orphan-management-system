@@ -13,5 +13,6 @@ urlpatterns = [
     path('orphanslist/updateorph/<str:orphanid>/', views.update_orphan, name="update_orphan"),
     path('adoptionrequest/', views.adoption_request_list, name='adoption-request-list'),
     path('adoptionrequest/updaterequest/<str:applicationid>', views.update_request_view, name='update-request-view'),
-    path('adoptionrequest/updaterequest/update', views.update_request, name='update-request')
+    path('adoptionrequest/updaterequest/update', views.update_request, name='update-request'),
+    path('mass_email/', views.mass_email, name='mass-email')
 ]

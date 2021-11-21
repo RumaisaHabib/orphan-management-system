@@ -136,4 +136,9 @@ def update_request(request):
     if request.method == 'POST':
         pass
     return redirect('/myadmin/orphanslist/')
-    
+
+def mass_email(request):
+    if request.method == 'POST':
+        content = request.POST['email-content']
+        print(content)
+    return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
