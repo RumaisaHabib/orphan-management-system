@@ -129,16 +129,21 @@ def update_request_view(request, applicationid):
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     sql = fr"SELECT * FROM AdoptionRequest WHERE ApplicationID='{applicationid}'"
     result = executeSQL(sql, ['ApplicationID', 'OrphanCNIC', 'ParentCNIC', 'Status'])
-    return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+    return render(request, 'myadmin/adoption_request.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
 
     
 def update_request(request):
     if request.method == 'POST':
-        pass
-    return redirect('/myadmin/orphanslist/')
+        status = request.POST['status']
+        appid = request.POST['applicationid']
+        sql = fr"UPDATE AdoptionRequest SET Status='{status}' WHERE ApplicationID='{appid}'"
+        executeSQL(sql)
+    return redirect('myadmin:adoption-request-list')
 
 def mass_email(request):
     if request.method == 'POST':
         content = request.POST['email-content']
         print(content)
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
+        
+    
