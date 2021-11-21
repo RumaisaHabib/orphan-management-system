@@ -88,16 +88,10 @@ def update_orphan(request, orphanid):
     
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
-
-    if not logged_in:
-        navname = 'navbar.html'
-    else:
-        navname = "logged_navbar.html"
-    
     if utype != 'admin':
-        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
 
-    return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": navname})
+    return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
     
 def update_record(request):
     logged_in = request.session.get('logged_in')
@@ -116,5 +110,30 @@ def update_record(request):
         sql = fr"Update Orphan set Name='{Name}', SpecialNeeds='{SpecialNeeds}', DateOfBirth='{DateOfBirth}', Education='{Education}', Sex='{Sex}' where CNIC='{CNIC}';"
         executeSQL(sql)
     
+    return redirect('/myadmin/orphanslist/')
+
+def adoption_request_list(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+
+    sql = fr"SELECT * FROM AdoptionRequest"
+    result = executeSQL(sql, ['ApplicationID', 'OrphanCNIC', 'ParentCNIC', 'Status'])
+    return render(request, 'myadmin/adoption_request_list.html', {"requests":result,"titles": list(result[0].keys()), "nav": which_nav(request)})
+
+def update_request_view(request, applicationid):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    sql = fr"SELECT * FROM AdoptionRequest WHERE ApplicationID='{applicationid}'"
+    result = executeSQL(sql, ['ApplicationID', 'OrphanCNIC', 'ParentCNIC', 'Status'])
+    return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+
+    
+def update_request_view(request):
+    if request.method == 'POST':
+        pass
     return redirect('/myadmin/orphanslist/')
     
