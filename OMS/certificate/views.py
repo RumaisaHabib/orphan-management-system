@@ -30,12 +30,13 @@ def download(request):
     
  
     # remove this after database is ready
-    sql = fr"INSERT INTO Volunteers (CNIC, Dept_ID, Name, Age, Sex, JoinDate, ContractEndDate, Phone, Email, Organization) VALUES('3342843729394', '1', 'Alina','17', 'Female', '666666', '999999', '57657657', 'me@ffdg', 'PSRD');"
- 
+    # sql = fr"INSERT INTO Volunteers (CNIC, DeptID, Name, Age, Sex, JoinDate, ContractEndDate, Phone, Email, Organization) VALUES('3342843729394', '1', 'Alina','17', 'Female', '666666', '999999', '57657657', 'me@ffdg', 'PSRD');"
+    # executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
     # remove til here
-    
-    sql = f"SELECT * FROM Volunteers WHERE CNIC = 3342843729394"
+
+    sql = f"SELECT * FROM Volunteers WHERE CNIC='6969696969695'"
     volunteer = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
+    print(volunteer)
     # text in the certifcate  
     lines = [
         "To whom it may concern.",
