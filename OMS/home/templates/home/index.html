@@ -6,12 +6,20 @@
                 <h1>Hello {{usertype}}</h1>
                 <button class="customButton" type="button" onclick="adminPanel()">Admin Panel</button>
                 {% endif %}
+                {% if usertype == 'volunteer' %}
+                <h1>Hello {{usertype}}</h1>
+                <button class="customButton" type="button" onclick="getCert()">Get Certificate</button>
+                {% endif %}
         </div>
 </body>
 <script type="text/javascript">
         function adminPanel()
         {
                 window.location.replace("/myadmin/");
+        }
+        function getCert()
+        {
+                window.location.replace("/certificate/");
         }
 </script>
 {% endblock %}

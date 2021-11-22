@@ -23,4 +23,5 @@ urlpatterns = [
     path('myadmin/', include("myadmin.urls")),
     path('feedback/', include("feedback.urls")),
     path('', include("home.urls")),
+    path('certificate/', include("certificate.urls")),
 ]
