@@ -38,8 +38,41 @@ def orphans_list(request):
 
     return render(request, 'myadmin/orphans_list.html', {"orphans":orphans, "titles": list(orphans[0].keys()), "nav": navname}) # This will pass the orphans as a js object
     # Please prettify the html. 
-    # # beauty lies in the heart. 
+    # # beauty lies in the heart.
+
+def employees_list(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if logged_in:
+        navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
     
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+
+    sql = fr"SELECT * FROM Employees"
+    employees = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'DateOfBirth', 'JoinDate', 'ContractEndDate', 'Email', 'Phone', 'Salary'])
+
+    return render(request, 'myadmin/employees_list.html', {"employees":employees, "titles": list(employees[0].keys()), "nav": navname}) # This will pass the orphans as a js object 
+
+def volunteers_list(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if logged_in:
+        navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+
+    sql = fr"SELECT * FROM Volunteers"
+    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization'])
+    return render(request, 'myadmin/volunteers_list.html', {"volunteers":volunteers, "titles": list(volunteers[0].keys()), "nav": navname}) 
+
 def add_orphan(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
@@ -146,7 +179,16 @@ def update_request(request):
         executeSQL(sql)
         sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
         address = executeSQL(sql, ['Email'])
-        send_email([address[0]['Email']], "Yellow is a primary colour", "whaddup")
+        if status=="Approved":
+            message= "We are pleased to inform you that your adoption application #" + appid + " has been accepted!"
+            subject= "Congratulations!"
+        elif status=="Denied":
+            message= "We are sorry to say that your adoption application #" + appid + " has been rejected."
+            subject= "Apologies"
+        else:
+            print("Email error")
+            return redirect('myadmin:adoption-request-list')
+        send_email([address[0]['Email']], message, subject)
 
     return redirect('myadmin:adoption-request-list')
 
