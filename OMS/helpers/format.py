@@ -20,15 +20,14 @@ def format_query(data, attributes):
 
 def executeSQL(sqlcom, colnames=[]):
     '''
-    Returns a list of dictionaries of the given query set for ease of accessing data.
+    Returns a list (results) of dictionaries (attributes of results) of the given query.
     
     params:
-    @data
-    This is the raw query set we get after an SQL query.
+    @sqlcom
+    SQL query to be executed
 
-    @attributes
-    These are the attributes we want to map the data onto. It's important that the order
-    of attributes matches how the data is represented in the databse.
+    @colnames
+    column names of the table being accessed
     '''
     with connection.cursor() as cursor:
         cursor.execute(sqlcom)
