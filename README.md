@@ -37,7 +37,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 
 
 ## Use Cases
-![image](https://user-images.githubusercontent.com/68891347/141086106-ba5e4311-298b-48b0-861c-b27f68d3ae60.png)
+![image](https://user-images.githubusercontent.com/68891347/142905669-87821db1-66b7-4746-a60f-4d821e2488a7.png)
 
 - [x] 1. Admitting new orphans
 - [x] 2. Updating Orphan info
