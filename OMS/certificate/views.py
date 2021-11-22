@@ -36,13 +36,13 @@ def download(request):
 
     sql = f"SELECT * FROM Volunteers WHERE CNIC='6969696969695'"
     volunteer = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
-    print(volunteer)
     # text in the certifcate  
     lines = [
         "To whom it may concern.",
         " ",
-        "This is to certify that <insert volunteer name here> has volunteered",
-        "at our Orphanage since <insert joindate here> till <insert contractenddate>", 
+        "This is to certify that " + volunteer[0]['Name'] + " has volunteered",
+        "at our Orphanage since " + str(volunteer[0]['JoinDate']) + " till " + str(volunteer[0]['ContractEndDate']),
+        " ",
         "This certificate appreciates the exemplary work done by the volunteer in", 
         "bringing happiness and joy in children's lives.",
         " ",
