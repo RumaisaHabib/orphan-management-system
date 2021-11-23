@@ -116,7 +116,7 @@ def update_orphan(request, orphanid):
     orphid = orphanid.split('=')[1]
 
     sql = fr"select * from Orphan where CNIC='{orphid}'"
-    result = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'Special Needs'])
+    result = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'SpecialNeeds'])
     
     print("updating this orphan:", result)
     
