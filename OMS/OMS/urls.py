@@ -24,4 +24,5 @@ urlpatterns = [
     path('feedback/', include("feedback.urls")),
     path('', include("home.urls")),
     path('certificate/', include("certificate.urls")),
+    path('parent/', include("parent.urls")),
 ]

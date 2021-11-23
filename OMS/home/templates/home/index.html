@@ -10,6 +10,11 @@
                 <h1>Hello {{usertype}}</h1>
                 <button class="customButton" type="button" onclick="getCert()">Get Certificate</button>
                 {% endif %}
+                {% if usertype == 'parent' %}
+                <h1>Hello {{usertype}}</h1>
+                <button class="customButton" type="button" onclick="()">View Orphans List</button>
+                <button class="customButton" type="button" onclick="()">Apply for Appointment</button>
+                {% endif %}
         </div>
 </body>
 <script type="text/javascript">
@@ -20,6 +25,10 @@
         function getCert()
         {
                 window.location.replace("/certificate/");
+        }
+        function parentViewOrphan()
+        {
+                window.location.replace("/parent/vieworph/");
         }
 </script>
 {% endblock %}

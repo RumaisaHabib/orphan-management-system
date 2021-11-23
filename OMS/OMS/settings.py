@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'myadmin',
     'feedback',
     'certificate',
+    'parent',
 ]
 
 MIDDLEWARE = [

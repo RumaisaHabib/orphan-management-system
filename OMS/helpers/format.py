@@ -21,6 +21,7 @@ def format_query(data, attributes):
 def executeSQL(sqlcom, colnames=[]):
     '''
     Returns a list (results) of dictionaries (attributes of results) of the given query.
+    If no colnames provided, it adds arbitrary names, such as col1, col2, col3 and so on.
     
     params:
     @sqlcom
