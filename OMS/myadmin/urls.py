@@ -6,7 +6,8 @@ app_name = "myadmin"
 
 urlpatterns = [
     path('', views.admin, name='myadmin_home'),
-    path('orphanslist/', views.orphans_list, name="orphans_list"),
+    path('view/', views.view_list, name="view_list"),
+    path('view/orphanslist/', views.orphans_list, name="orphans_list"),
     path('employeeslist/', views.employees_list, name="employees_list"),
     path('volunteerslist/', views.volunteers_list, name="volunteers_list"),
     path('addorphan/', views.add_orphan, name="add_orphan"),

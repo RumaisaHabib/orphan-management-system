@@ -10,9 +10,10 @@ def signupVolunteer(request):
         email = request.POST["email"]
         print(email)
         pwd = request.POST["password"]
+        cnic = str(request.POST["CNIC"])
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
         utype = "volunteer"
-        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{hashed_pwd}', '{utype}');"
+        sql = fr"INSERT INTO Users VALUES ('{cnic}', '{email}', '{hashed_pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
             request.session['logged_in'] = 1
@@ -38,9 +39,10 @@ def signupParent(request):
         email = request.POST["email"]
         print(email)
         pwd = request.POST["password"]
+        cnic = request.POST["CNIC"]
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
         utype = "parent"
-        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{hashed_pwd}', '{utype}');"
+        sql = fr"INSERT INTO Users (CNIC, Email, Password, Usertype) VALUES ('{cnic}', '{email}', '{hashed_pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
             request.session['logged_in'] = 1

@@ -73,6 +73,20 @@ def volunteers_list(request):
     volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization'])
     return render(request, 'myadmin/volunteers_list.html', {"volunteers":volunteers, "titles": list(volunteers[0].keys()), "nav": navname}) 
 
+def view_list(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if logged_in:
+        navname = "logged_navbar.html"
+    else:
+        navname = "navbar.html"
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": navname})
+
+    return render(request, 'myadmin/view_list.html', {"nav": navname}) 
+
 def add_orphan(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
