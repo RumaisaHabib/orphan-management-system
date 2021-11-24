@@ -45,19 +45,19 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [ ] 4. Post-adoption request process - 
 - [ ] 5. Add new employees 
 - [ ] 6. Approve volunteer requests
-- [ ] 7. View people’s information - 
+- [x] 7. View people’s information  
 - [ ] 8. Fund management
 - [x] 9. Notifying parents upon adoption result - 
-- [ ] 10. Update Information(Employee/volunteer)
+- [x] 10. Update Information(Employee/volunteer)
 - [x] 11. Sign up
 - [x] 12. Approve adoption application -
 - [x] 13. Login
 - [ ] 14. Apply for department role
 - [ ] 15. View department information
 - [ ] 16. Manage appointment - 
-- [ ] 17. Donation
+- [x] 17. Donation
 - [x] 18. Feedback
-- [ ] 19. Download certificate
+- [x] 19. Download certificate
 - [ ] 20. View orphan list/add search filters - 
 - [ ] 21. Apply for adoption -
 - [ ] 22. Apply for appointment - 
