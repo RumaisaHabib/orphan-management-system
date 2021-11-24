@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpRequest
 from django.db import connection
-from helpers.format import format_query 
+from helpers.format import format_query, executeSQL
 import hashlib
 
 from home.views import index
@@ -23,6 +23,10 @@ def login(request):
                     print("Successfully logged in")
                     request.session['logged_in'] = 1
                     request.session['usertype'] = utype
+                    # if the user is not admin, also get their cnic from the db
+                    if utype != "admin":
+                        res = executeSQL(fr"select CNIC from Users where Email='{email}' and Password='{hashed_pwd}' AND Usertype = '{utype}';", ["cnic"])
+                        request.session['cnic'] = res[0]['cnic']
                     return redirect('home:index') # This should redirect to success page or back home
             return redirect('home:index') # This branch will be for failure
     

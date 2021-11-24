@@ -4,7 +4,7 @@ from django.db import connection
 import hashlib
 
 # Create your views here.
-def signup(request):
+def signupVolunteer(request):
     if request.method == "POST":
         print(request.POST)
         email = request.POST["email"]
@@ -24,4 +24,9 @@ def signup(request):
             # another page rendered instead: to be made.
             return redirect('home:index')
         return render(request, "signup/signup.html")
-    
+
+def signup(request):
+    return render(request, "signup/signup.html")
+
+def signupParent(request):
+    pass

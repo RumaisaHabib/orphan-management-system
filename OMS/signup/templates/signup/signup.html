@@ -2,54 +2,164 @@
 {% block content %}
 
 <body>
-<div class = "center-align">
-        <div class="row">
-                <div class="col s4 push-s4">
-                  <div class="card">
-                    <div class="card-content">
-                      <span class="card-title"><h3>Signup</h3></span>
-                        <form class="container" action= "/signup/" method="POST">
-                        {% csrf_token %}
-                          <div class = "row">
-  
-                            <div class="input-field col s12">
-                              <input  name="email" id="email" type="email"  class="validate" required>
-                              <label for="email">Email</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <input name="password" id="password" type="password" class="validate" required>
-                                <label for="password">Password</label>
-                            </div>
-                            <div class="input-field col s12">
-                              <select name="usertype" required>
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="parent">Potential Parent</option>
-                                <option value="volunteer">Volunteer</option>
-                              </select>
-                              <label>I am a</label>
-                            </div>
-                          
-                            <div class="input-field col s12">
-                              <button class="btn waves-effect waves-light" type="submit" name="action">
-                                Submit
-                              </button>
-                            </div>
-                            
-                          </div>
-                        </form>
-  
-  
-                    </div>
-  
-                  </div>
+  <div class = "center-align">
+    <div class="row">
+      <div class="col s4 push-s4">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><h3>Signup</h3></span>
+            <div class="input-field col s12">
+              <select name="usertype" id="useroption" onchange="optionSelected()" required>
+                <option value="" disabled>Choose your option</option>
+                <option value="parent">Potential Parent</option>
+                <option value="volunteer" selected>Volunteer</option>
+              </select>
+              <label for="usertype">I am a</label>
+            </div>
+            <form class="container volunteer-form" action= "/signupvolunteer/" method="POST">
+              {% csrf_token %}
+              <div class = "row">
+                <div class="input-field col s12">
+                  <input name="CNIC" id="CNIC" type="text" required >
+                  <label for="CNIC">CNIC</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="name" id="name" type="text"required >
+                  <label for="name">Name</label>
+                </div>
+                <div class="input-field col s12">
+                  <input  name="email" id="email" type="email"  class="validate" required>
+                  <label for="email">Email</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="password" id="password" type="password" class="validate" required>
+                  <label for="password">Password</label>
+                </div>
+                <div class="input-field col s12">
+                  <input  name="deptid" id="deptid" type="number" >
+                  <label for="deptid">Department ID</label>
+                </div>
+                <div class="input-field col s12">
+                  <select name="sex" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="X">Other</option>
+                  </select>
+                  <label>Sex </label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="age" id="age" type="number" >
+                  <label for="age">Age</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="joindate" id="joindate" type="datetime-local" >
+                  <label style="margin-top: -20px;" for="joindate">Join Date</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="contractenddate" id="contractenddate" type="datetime-local" >
+                  <label style="margin-top: -20px;" for="contractenddate">Contract End Date</label>                </div>
+                <div class="input-field col s12">
+                  <input name="phone" id="phone" type="number" >
+                  <label for="phone">Phone</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="organization" id="organization" type="text" >
+                  <label for="organization">Organization</label>
+                </div>
+                <div class="input-field col s12">
+                  <button class="btn waves-effect waves-light" type="submit" name="action">
+                    Submit
+                  </button>
                 </div>
               </div>
-</div>
+            </form>
+            <form class="container parent-form" style="display: none" action= "/signupparent/" method="POST">
+              {% csrf_token %}
+              <div class = "row">
+                
+                  <div class="input-field col s12">
+                    <input name="CNIC" id="CNIC" type="text" required >
+                    <label for="CNIC">CNIC</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="name" id="name" type="text"required >
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input  name="email" id="email" type="email"  class="validate" required>
+                    <label for="email">Email</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="password" id="password" type="password" class="validate" required>
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <label style="margin-top: -20px;" for="dateofbirth">Date Of Birth</label>
+                    <input name="dateofbirth" id="dateofbirth" type="datetime-local" required>
+  
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="maritalstatus" id="maritalstatus" type="text" required>
+                    <label for="maritalstatus">Marital Status</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="profession" id="profession" type="text">
+                    <label for="profession">Profession</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="monthlyearning" id="monthlyearning" type="number" required>
+                    <label for="monthlyearning">Monthly Earning</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="noofpreviouschildren" id="noofpreviouschildren" type="number" required>
+                    <label for="noofpreviouschildren">Number Of Previous Children</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="address" id="address" type="text" required>
+                    <label for="address">Address</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="phone" id="phone" type="number" >
+                    <label for="phone">Phone</label>
+                  </div>
+
+                <div class="input-field col s12">
+                  <button class="btn waves-effect waves-light" type="submit" name="action">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
-    $(document).ready(function(){
+
+  function optionSelected()
+  {
+    // change the form based on the selection
+    ele = document.getElementById("useroption");
+
+    if (ele.value === "parent")
+    {
+      document.getElementsByClassName('parent-form')[0].style.display = "block";
+      document.getElementsByClassName('volunteer-form')[0].style.display = "none";
+    }
+    else
+    {
+      document.getElementsByClassName('parent-form')[0].style.display = "none";
+      document.getElementsByClassName('volunteer-form')[0].style.display = "block";
+    }
+    // console.log($('#useroption').value);
+  }
+
+  $(document).ready(function(){
     $('select').formSelect();
   });
-        
+
 </script>
 {% endblock %}
