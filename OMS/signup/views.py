@@ -11,9 +11,10 @@ def signupVolunteer(request):
         email = request.POST["email"]
         print(email)
         pwd = request.POST["password"]
+        cnic = str(request.POST["CNIC"])
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
-        utype = request.POST["usertype"]
-        sql = fr"INSERT INTO Users (Email, Password, Usertype) VALUES('{email}', '{hashed_pwd}', '{utype}');"
+        utype = "volunteer"
+        sql = fr"INSERT INTO Users VALUES ('{cnic}', '{email}', '{hashed_pwd}', '{utype}');"
         with connection.cursor() as cursor:
             cursor.execute(sql)
             request.session['logged_in'] = 1
@@ -60,9 +61,11 @@ def signupParent(request):
             return render(request, '/signuperror.html')
 
         return redirect('/')
-    else:
-        if request.session.get("logged_in")==1:
+
+    if request.session.get("logged_in")==1:
             print("you're already logged in")
             # another page rendered instead: to be made.
             return redirect('home:index')
-        return render(request, "signup/signup.html")
+    return render(request, "signup/signup.html")
+
+

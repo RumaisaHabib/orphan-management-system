@@ -7,7 +7,7 @@
       <div class="col s4 push-s4">
         <div class="card">
           <div class="card-content">
-            <span class="card-title"><h3>Update orphan data</h3></span>
+            <span class="card-title"><h3>Update volunteer data</h3></span>
             <form class="container" action= "../updaterecord/" method="POST">
               {% csrf_token %}
               <div class = "row">
@@ -20,21 +20,20 @@
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="specialneeds" id="specialneeds" type="text" value="{{result.SpecialNeeds}}">
-                  <label for="specialneeds">Special Needs (optional)</label>
+                  <input name="email" id="email" type="text" value="{{result.Email}}" required>
+                  <label for="email">Email</label>
                 </div>
                 <div class="input-field col s12">
-                  <label style="margin-top: -20px;" for="DateOfBirth">Date of Birth</label>
-                  <input name="DateOfBirth" id="DateOfBirth" type="datetime-local" value="{{result.DateOfBirth}}" required>
+                  <input name="deptid" id="deptid" type="number" value="{{result.DeptID}}">
+                  <label for="deptid">Dept ID</label>
                 </div>
                 <div class="input-field col s12">
-                  <select name="education" selected="{{result.Education}}" required>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="Kindergarten" {% if result.Education in "Kindergarten" %}selected{% endif %}>Kindergarten</option>
-                    <option value="Nursery" {% if result.Education in "Nursery" %}selected{% endif %} >Nursery </option>
-                    <option value="Grade 1" {% if result.Education in "Grade 1" %}selected{% endif %}>Grade 1</option><option value="Grade 2"{% if result.Education in "Grade 2" %}selected{% endif %}>Grade 2</option><option value="Grade 3"{% if result.Education in "Grade 3" %}selected{% endif %}>Grade 3</option><option value="Grade 4"{% if result.Education in "Grade 4" %}selected{% endif %}>Grade 4</option><option value="Grade 5"{% if result.Education in "Grade 5" %}selected{% endif %}>Grade 5</option><option value="Grade 6"{% if result.Education in "Grade 6" %}selected{% endif %}>Grade 6</option><option value="Grade 7"{% if result.Education in "Grade 7" %}selected{% endif %}>Grade 7</option><option value="Grade 8"{% if result.Education in "Grade 8" %}selected{% endif %}>Grade 8</option><option value="O-Levels"{% if result.Education in "O-Levels" %}selected{% endif %}>O-Levels</option><option value="A levls"{% if result.Education in "A levels" %}selected{% endif %}>A-levels</option>
-                  </select>
-                  <label>Education</label>
+                  <label style="margin-top: -20px;">Join Date</label>
+                  <input name="JoinDate" id="JoinDate" type="datetime-local" value="{{result.JoinDate}}" required>
+                </div>
+                <div class="input-field col s12">
+                  <label style="margin-top: -20px;">Contract End Date</label>
+                  <input name="EndDate" id="EndDate" type="datetime-local" value="{{result.ContractEndDate}}" required>
                 </div>
                 <div class="input-field col s12">
                   <select name="sex" required>
@@ -45,7 +44,18 @@
                   </select>
                   <label>Sex </label>
                 </div>
-                                        
+                <div class="input-field col s12">
+                  <input name="age" id="age" type="number" value="{{result.Age}}">
+                  <label for="age">Age</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="phone" id="phone" type="number" value="{{result.Phone}}">
+                  <label for="phone">Phone</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="organization" id="organization" type="text" value="{{result.Organization}}">
+                  <label for="organization">Organization</label>
+                </div>                  
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light" type="submit" name="action">
                     Update

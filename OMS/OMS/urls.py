@@ -22,7 +22,8 @@ urlpatterns = [
     path('signup/', include("signup.urls")),
     path('myadmin/', include("myadmin.urls")),
     path('feedback/', include("feedback.urls")),
-    path('', include("home.urls")),
     path('certificate/', include("certificate.urls")),
     path('parent/', include("parent.urls")),
+    path('donate/', include('donation.urls')),
+    path('', include("home.urls")),
 ]

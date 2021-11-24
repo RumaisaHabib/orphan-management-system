@@ -1,0 +1,43 @@
+{% extends nav %}
+{% block content %}
+
+<body>
+  <div class = "center-align">
+    <div class="row">
+      <div class="col s4 push-s4">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><h3>Make Donation</h3></span>
+            <span class="card-title"><h3>Bank Name: Doge Bank</h3></span>
+            <span class="card-title"><h3>Account Number: 42069</h3></span>
+            <form class="container" action= "/donate/donated/" method="POST">
+              {% csrf_token %}
+              <div class = "row">
+                <div class="input-field col s12">
+                  <input name="Transaction ID" id="Transaction ID" type="text" required>
+                  <label for="Transaction ID">Transaction ID</label>
+                </div>
+                <div class="input-field col s12">
+                  <input name="Amount" id="Amount" type="text" required>
+                  <label for="Amount">Amount (in rupees)</label>
+                </div>                        
+                <div class="input-field col s12">
+                  <button class="btn waves-effect waves-light" type="submit" name="action">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+</script>
+{% endblock %}
