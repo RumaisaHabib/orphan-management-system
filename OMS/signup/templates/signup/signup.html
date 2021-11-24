@@ -16,7 +16,7 @@
               </select>
               <label for="usertype">I am a</label>
             </div>
-            <form class="container volunteer-form" style="display: none;" action= "signupvolunteer/" method="POST">
+            <form class="container volunteer-form" style="display: none;" action= "volunteer/" method="POST">
               {% csrf_token %}
               <div class = "row">
                 <div class="input-field col s12">
@@ -80,7 +80,7 @@
                 </div>
               </div>
             </form>
-            <form class="container parent-form" style="display: none" action= "signupparent/" method="POST">
+            <form class="container parent-form" style="display: none" action= "parent/" method="POST">
               {% csrf_token %}
               <div class = "row">
                   <div class="input-field col s12">
