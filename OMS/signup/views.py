@@ -26,6 +26,10 @@ def signupVolunteer(request):
         return render(request, "signup/signup.html")
 
 def signup(request):
+    if request.session.get("logged_in")==1:
+            print("you're already logged in")
+            # another page rendered instead: to be made.
+            return redirect('home:index')
     return render(request, "signup/signup.html")
 
 def signupParent(request):
