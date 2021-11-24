@@ -141,7 +141,7 @@ def update_orphan(request, orphanid):
 
     return render(request, 'myadmin/update_orphan.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
     
-def update_record(request):
+def update_record_o(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
     if utype != 'admin':
@@ -160,7 +160,88 @@ def update_record(request):
         sql = fr"Update Orphan set Name='{Name}', SpecialNeeds='{SpecialNeeds}', DateOfBirth='{DateOfBirth}', Education='{Education}', Sex='{Sex}' where CNIC='{CNIC}';"
         executeSQL(sql)
     
-    return redirect('/myadmin/orphanslist/')
+    return redirect('/myadmin/view/orphanslist/')
+
+def update_volunteer(request, volunteerid):
+
+    volid = volunteerid.split('=')[1]
+
+    sql = fr"select * from Volunteers where CNIC='{volid}'"
+    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization'])
+    
+    print("updating this volunteer:", result)
+    
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+        
+    return render(request, 'myadmin/update_volunteer.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+
+def update_record_v(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    # sql("update Orphan where CNIC=id")
+    if request.method == "POST":
+        CNIC = request.POST["CNIC"]
+        Name = request.POST["name"]
+        join = request.POST["JoinDate"]
+        end=request.POST["EndDate"]
+        Sex=request.POST["sex"]
+        email=request.POST["email"]
+        dept=request.POST["deptid"]
+        org=request.POST["organization"]
+        phone=request.POST["phone"]
+        age=request.POST["age"]
+        
+        print([(x,k) for x,k in request.POST.items()])
+    # ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization']
+        sql = fr"Update Volunteers set Name='{Name}', DeptID='{dept}', Age='{age}', JoinDate='{join}', Sex='{Sex}', ContractEndDate='{end}', Email='{email}', Organization='{org}', Phone='{phone}' where CNIC='{CNIC}';"
+        executeSQL(sql)
+    
+    return redirect('/myadmin/view/volunteerslist/')
+
+def update_employee(request, employeeid):
+
+    id = employeeid.split('=')[1]
+
+    sql = fr"select * from Employees where CNIC='{id}'"
+    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'DateOfBirth',  'JoinDate', 'ContractEndDate', 'Email','Phone', 'Salary'])
+    
+    print("updating this employee:", result)
+    
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+        
+    return render(request, 'myadmin/update_employee.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+
+def update_record_e(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    # sql("update Orphan where CNIC=id")
+    if request.method == "POST":
+        CNIC = request.POST["CNIC"]
+        Name = request.POST["name"]
+        join = request.POST["JoinDate"]
+        end=request.POST["EndDate"]
+        email=request.POST["email"]
+        dept=request.POST["deptid"]
+        salary=request.POST["salary"]
+        phone=request.POST["phone"]
+        dob=request.POST["dateofbirth"]
+        
+        print([(x,k) for x,k in request.POST.items()])
+    # ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization']
+        sql = fr"Update Employees set Name='{Name}', DeptID='{dept}', DateOfBirth='{dob}', JoinDate='{join}', ContractEndDate='{end}', Email='{email}', Salary='{salary}', Phone='{phone}' where CNIC='{CNIC}';"
+        executeSQL(sql)
+    
+    return redirect('/myadmin/view/employeeslist/')
 
 def adoption_request_list(request):
     logged_in = request.session.get('logged_in')

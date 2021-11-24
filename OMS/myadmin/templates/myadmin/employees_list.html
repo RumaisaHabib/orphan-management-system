@@ -21,6 +21,7 @@
     .hoverable-record:hover
     {
         background-color: lightcoral;
+        cursor: pointer;
     }
 </style>
 <body>
@@ -50,5 +51,10 @@
         </div>
     </div>
 </body>
-
+<script>
+    $(".hoverable-record").click(function() {
+        var myid = $(this).attr('id').replace('#', '').replace('n', '');
+        window.location.replace("updateemp/id=" + myid);
+    });
+</script>
 {% endblock %}
