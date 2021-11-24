@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'feedback',
     'certificate',
     'parent',
+    'donation'
 ]
 
 MIDDLEWARE = [
