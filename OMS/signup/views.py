@@ -12,20 +12,38 @@ def signupVolunteer(request):
         print(email)
         pwd = request.POST["password"]
         cnic = str(request.POST["CNIC"])
+        age=request.POST["age"]
+        sex=request.POST["sex"]
+        organization=request.POST["organization"]
+        phone= request.POST["phone"]
+        contractenddate=request.POST["contractenddate"]
+        joindate=request.POST["joindate"]
+        dd=request.POST["deptid"]
+        name = request.POST["name"]
+        
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
-        utype = "volunteer"
-        sql = fr"INSERT INTO Users VALUES ('{cnic}', '{email}', '{hashed_pwd}', '{utype}');"
-        with connection.cursor() as cursor:
-            cursor.execute(sql)
-            request.session['logged_in'] = 1
-            request.session['usertype'] = utype
-        return redirect('home:index')
-    else:
-        if request.session.get("logged_in")==1:
-            print("you're already logged in")
-            # another page rendered instead: to be made.
-            return redirect('home:index')
-        return render(request, "signup/signup.html")
+        
+        usertype = "volunteer"
+        try:
+            # add this parent
+            sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{email}','{organization}' )"
+            executeSQL(sql)
+
+            # now add this user
+            sql = fr"insert into Users values('{cnic}', '{email}', '{hashed_pwd}', '{usertype}')"
+            executeSQL(sql)
+            
+        except Exception as e:
+            print('ERROR SIGNING UP', e)
+            return render(request, '/signuperror.html')
+ 
+    if request.session.get("logged_in")==1:
+        print("you're already logged in")
+        # another page rendered instead: to be made.
+        return redirect('home:index') 
+    return render(request, "signup/signup.html")
+
+
 
 def signup(request):
     departments = executeSQL("select DeptID, DeptName from Department", ["id", "name"])
@@ -66,6 +84,6 @@ def signupParent(request):
             print("you're already logged in")
             # another page rendered instead: to be made.
             return redirect('home:index')
-    return render(request, "signup/signup.html")
+    return render(request, "signup/successfulsignup.html")
 
 

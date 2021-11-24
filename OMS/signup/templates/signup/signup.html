@@ -36,7 +36,7 @@
                   <label for="password">Password</label>
                 </div>
                 <div class="input-field col s12">
-                  <select name="sex" required>
+                  <select name="deptid" id="deptid" type="deptid"  class="validate" required>
                     <option value="" disabled selected>Choose your option</option>
                     {% for x in dept %}
                     <option value="{{x.id}}">{{x.name}}</option>
