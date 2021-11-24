@@ -28,4 +28,25 @@ def adoptOrphan(request, orphanid):
 
 	return render(request, 'parent/adoptionreqsubmitted.html', {"nav": which_nav(request)})
 	
+def getAppointment(request):
+	utype = request.session.get('usertype')
+	if utype != 'parent':
+	    return render(request, 'parent/not_parent.html', {"nav": which_nav(request)})
 
+	admins = executeSQL("select CNIC, Name from Admin", ['cnic', 'name'])
+
+	return render(request, 'parent/getAppointment.html', {"nav": which_nav(request), "admins":admins})
+
+def bookAppointment(request):
+	utype = request.session.get('usertype')
+	if utype != 'parent':
+	    return render(request, 'parent/not_parent.html', {"nav": which_nav(request)})
+
+	print([x for x in request.POST.items()])
+	adminCnic = request.POST["admin"]
+	time = request.POST["appointment"]
+	parentcnic = request.session.get("cnic")
+
+	executeSQL(fr"insert into Appointment (ParentCNIC, AdminCNIC, AppointmentTime) values('{parentcnic}', '{adminCnic}', '{time}')")
+
+	return redirect("/")

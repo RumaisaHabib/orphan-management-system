@@ -12,8 +12,10 @@
                 {% endif %}
                 {% if usertype == 'parent' %}
                 <h1>Hello {{usertype}}</h1>
-                <button class="customButton" type="button" onclick="()">View Orphans List</button>
-                <button class="customButton" type="button" onclick="()">Apply for Appointment</button>
+                <span>
+                        <button class="customButton" type="button" onclick="parentViewOrphan()">View Orphans List</button>
+                        <button class="customButton" type="button" onclick="getAnAppointment()">Get an Appointment</button>
+                </span>
                 {% endif %}
         </div>
 </body>
@@ -29,6 +31,10 @@
         function parentViewOrphan()
         {
                 window.location.replace("/parent/vieworph/");
+        }
+        function getAnAppointment()
+        {
+                window.location.replace("/parent/getappt/");       
         }
 </script>
 {% endblock %}

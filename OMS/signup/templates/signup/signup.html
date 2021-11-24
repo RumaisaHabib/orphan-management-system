@@ -6,25 +6,25 @@
     <div class="row">
       <div class="col s4 push-s4">
         <div class="card">
-          <div class="card-content">
+          <div class="card-content" style="min-height: 300px;">
             <span class="card-title"><h3>Signup</h3></span>
             <div class="input-field col s12">
               <select name="usertype" id="useroption" onchange="optionSelected()" required>
-                <option value="" disabled>Choose your option</option>
+                <option value="" disabled selected>Choose your option</option>
                 <option value="parent">Potential Parent</option>
-                <option value="volunteer" selected>Volunteer</option>
+                <option value="volunteer">Volunteer</option>
               </select>
               <label for="usertype">I am a</label>
             </div>
-            <form class="container volunteer-form" action= "/signupvolunteer/" method="POST">
+            <form class="container volunteer-form" style="display: none;" action= "signupvolunteer/" method="POST">
               {% csrf_token %}
               <div class = "row">
                 <div class="input-field col s12">
-                  <input name="CNIC" id="CNIC" type="text" required >
+                  <input name="CNIC" id="CNIC" type="text" required>
                   <label for="CNIC">CNIC</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="name" id="name" type="text"required >
+                  <input name="name" id="name" type="text"required>
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s12">
@@ -36,8 +36,13 @@
                   <label for="password">Password</label>
                 </div>
                 <div class="input-field col s12">
-                  <input  name="deptid" id="deptid" type="number" >
-                  <label for="deptid">Department ID</label>
+                  <select name="sex" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    {% for x in dept %}
+                    <option value="{{x.id}}">{{x.name}}</option>
+                    {% endfor %}
+                  </select>
+                  <label>Department you want to apply for</label>
                 </div>
                 <div class="input-field col s12">
                   <select name="sex" required>
@@ -49,22 +54,23 @@
                   <label>Sex </label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="age" id="age" type="number" >
+                  <input name="age" id="age" type="number" required>
                   <label for="age">Age</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="joindate" id="joindate" type="datetime-local" >
-                  <label style="margin-top: -20px;" for="joindate">Join Date</label>
+                  <input name="joindate" id="joindate" type="datetime-local" required>
+                  <label style="margin-top: -20px;" for="joindate">When can you join?</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="contractenddate" id="contractenddate" type="datetime-local" >
-                  <label style="margin-top: -20px;" for="contractenddate">Contract End Date</label>                </div>
+                  <input name="contractenddate" id="contractenddate" type="datetime-local" required>
+                  <label style="margin-top: -20px;" for="contractenddate">Proposed Contract end date</label>                
+                </div>
                 <div class="input-field col s12">
-                  <input name="phone" id="phone" type="number" >
+                  <input name="phone" id="phone" type="number" required>
                   <label for="phone">Phone</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="organization" id="organization" type="text" >
+                  <input name="organization" id="organization" type="text" required>
                   <label for="organization">Organization</label>
                 </div>
                 <div class="input-field col s12">
@@ -74,16 +80,15 @@
                 </div>
               </div>
             </form>
-            <form class="container parent-form" style="display: none" action= "/signupparent/" method="POST">
+            <form class="container parent-form" style="display: none" action= "signupparent/" method="POST">
               {% csrf_token %}
               <div class = "row">
-                
                   <div class="input-field col s12">
-                    <input name="CNIC" id="CNIC" type="text" required >
+                    <input name="CNIC" id="CNIC" type="text" required>
                     <label for="CNIC">CNIC</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="name" id="name" type="text"required >
+                    <input name="name" id="name" type="text"required>
                     <label for="name">Name</label>
                   </div>
                   <div class="input-field col s12">
@@ -104,7 +109,7 @@
                     <label for="maritalstatus">Marital Status</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="profession" id="profession" type="text">
+                    <input name="profession" id="profession" type="text" required>
                     <label for="profession">Profession</label>
                   </div>
                   <div class="input-field col s12">
@@ -120,11 +125,10 @@
                     <label for="address">Address</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="phone" id="phone" type="number" >
+                    <input name="phone" id="phone" type="number" required>
                     <label for="phone">Phone</label>
                   </div>
-
-                <div class="input-field col s12">
+                  <div class="input-field col s12">
                   <button class="btn waves-effect waves-light" type="submit" name="action">
                     Submit
                   </button>
