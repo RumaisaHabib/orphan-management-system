@@ -12,9 +12,32 @@ def viewOrphans(request):
 
 	sql = f"SELECT * FROM Orphan"
 	orphans = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'Special Needs'])
-
+	print(orphans)
 	return render(request, 'parent/orphanslist.html', {"orphans":orphans, "titles": list(orphans[0].keys()), "nav": which_nav(request)})
 
+def applyFilter(request):
+	if request.method == "POST":
+		utype = request.session.get('usertype')
+		if utype != 'parent':
+		    return render(request, 'parent/not_parent.html', {"nav": which_nav(request)})
+
+		sql = f"select * from Orphan where 1"
+		for x,y in request.POST.items():
+			if y == "":
+				continue
+			if x in ["Name", "Sex", "Education"]:
+				sql += f" and {x} like '%{y}%' "
+			elif x == "DateOfBirth":
+				sql += f" and {x} > '{y}' "
+
+		print(sql)
+		orphans = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'Special Needs'])
+		if len(orphans) > 0:
+			return render(request, 'parent/tableForFilters.html', {"orphans":orphans, "titles": list(orphans[0].keys()), "nav": which_nav(request)})
+		else:
+			return HttpResponse("")
+	else:
+		return viewOrphans(request)
 
 def adoptOrphan(request, orphanid):
 	orphid = orphanid.split('=')[1]

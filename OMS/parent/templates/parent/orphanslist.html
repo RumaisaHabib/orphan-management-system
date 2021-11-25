@@ -23,27 +23,75 @@
         background-color: lightcoral;
         cursor: pointer;
     }
+    #filters-cont
+    {
+        height: 0px;
+        transition: height 0.5s;
+        overflow: hidden;
+    }
 </style>
 <body>
     <div class = "center-align">
         <div class="row">
             <div>
                 <span class="card-title"><h3>Orphans</h3></span>
+                <button class="customButton" id="toggle-filters" style="margin: 20px;">Filters</button>
+                <div class="container" id="filters-cont">
+                    <form id="filtersform" method="POST" action="applyfilters/" style="display: flex; flex-direction: row; width: 1000px; margin: auto; justify-content: space-around; flex-wrap: wrap; align-content: center;">
+                        {% csrf_token %}    
+                        <div style="display: flex; flex-direction: column;">
+                            <label>Name</label>
+                            <input style="width: 200px;" id="Name" name="Name" type="text" placeholder="Name"></input>
+                        </div>
+                        <div style="width: 200px; margin: auto; display: inline;">
+                            <label>Sex</label>
+                            <select name="Sex" id="Sex" style="width: 200px">
+                                <option value="" selected style="width: 200px">No filter</option>
+                                <option value="M" style="width: 200px">Male</option>
+                                <option value="F" style="width: 200px">Female</option>
+                                <option value="X" style="width: 200px">Other</option>
+                            </select>
+                        </div>
+                        <div style="width: 200px; margin: auto; display: inline;">
+                            <label>Education</label>
+                            <select name="Education">
+                                <option value="" selected>No filter</option>
+                                <option value="Kindergarten">Kindergarten</option>
+                                <option value="Nursery">Nursery</option>
+                                <option value="Grade 1">Grade 1</option>
+                                <option value="Grade 2">Grade 2</option>
+                                <option value="Grade 3">Grade 3</option>
+                                <option value="Grade 4">Grade 4</option>
+                                <option value="Grade 5">Grade 5</option>
+                                <option value="Grade 6">Grade 6</option>
+                                <option value="Grade 7">Grade 7</option>
+                                <option value="Grade 8">Grade 8</option>
+                                <option value="O-Levels">O-Levels</option>
+                                <option value="A levls">A-levels</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                            <label>Dateofbirth LowerBound</label>
+                            <input style="width: 200px" name="DateOfBirth" id="DateOfBirth" type="datetime-local">
+                        </div>
+                        <button type="submit" class="customButton" style="margin: 20px; width: 200px">Apply</button>
+                    </form>
+                </div>
                 <table>
                     <thead>
                         <tr>
                             {% for title in titles %}
-                                <th>{{title}}</th>
+                            <th>{{title}}</th>
                             {% endfor %}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tablebody">
                         {% for orphan in orphans %}
-                            <tr class="hoverable-record" id="n{{orphan.CNIC}}">
-                                {% for key, value in orphan.items %}
-                                    <td>{{value}}</td>
-                                {% endfor %}
-                            </tr>
+                        <tr class="hoverable-record" id="n{{orphan.CNIC}}">
+                            {% for key, value in orphan.items %}
+                            <td>{{value}}</td>
+                            {% endfor %}
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -59,6 +107,46 @@
             window.location.replace("adoptorphan/id=" + myid);
         }
     });
+
+    $("#filtersform").submit(function(e) {
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    var form = $(this);
+    var url = form.attr('action');
+    
+    $.ajax({
+     type: "POST",
+     url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               console.log(data); // show response from the php script.
+               $("#tablebody").html(data)
+           }
+       });
+    });
+
+    $(document).ready(function(){
+        $('select').formSelect();
+    });
+
+    $("#toggle-filters").click(function()
+    {
+        var ele = $("#filters-cont")
+        console.log(ele.height())
+        if (ele.height() == 200)
+        {
+            ele.css({overflow: 'hidden'})
+            ele.height(0)
+        }
+        else
+        {
+            ele.css({overflow: 'visible'})
+            ele.height(200)
+        }
+    });
+    
 </script>
 
 {% endblock %}

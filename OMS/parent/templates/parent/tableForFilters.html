@@ -1,0 +1,7 @@
+{% for orphan in orphans %}
+<tr class="hoverable-record" id="n{{orphan.CNIC}}">
+    {% for key, value in orphan.items %}
+    <td>{{value}}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
