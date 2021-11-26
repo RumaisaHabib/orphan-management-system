@@ -35,7 +35,7 @@ def signupVolunteer(request):
             
         except Exception as e:
             print('ERROR SIGNING UP', e)
-            return render(request, '/signuperror.html')
+            return render(request, 'signup/signuperror.html')
  
     if request.session.get("logged_in")==1:
         print("you're already logged in")
@@ -76,7 +76,7 @@ def signupParent(request):
             executeSQL(sql)
         except Exception as e:
             print('ERROR SIGNING UP', e)
-            return render(request, '/signuperror.html')
+            return render(request, 'signup/signuperror.html')
 
         return redirect('/')
 
