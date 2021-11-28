@@ -37,7 +37,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 
 
 ## Use Cases
-![image](https://user-images.githubusercontent.com/68891347/142905669-87821db1-66b7-4746-a60f-4d821e2488a7.png)
+![image](https://user-images.githubusercontent.com/68891347/143782026-fd574bd3-d295-457e-817e-a9db2f785645.png)
 
 - [x] 1. Admitting new orphans
 - [x] 2. Updating Orphan info
@@ -58,9 +58,9 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 17. Donation
 - [x] 18. Feedback
 - [x] 19. Download certificate
-- [ ] 20. View orphan list/add search filters - 
-- [ ] 21. Apply for adoption -
-- [ ] 22. Apply for appointment - 
+- [x] 20. View orphan list/add search filters - 
+- [x] 21. Apply for adoption -
+- [x] 22. Apply for appointment - 
 - [x] 23. Update password
 
 ## Tech Stack Used
