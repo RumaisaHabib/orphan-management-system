@@ -42,7 +42,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 1. Admitting new orphans
 - [x] 2. Updating Orphan info
 - [x] 3. Mass Email - 
-- [ ] 4. Post-adoption request process - 
+- [x] 4. Post-adoption request process - 
 - [ ] 5. Add new employees 
 - [ ] 6. Approve volunteer requests
 - [x] 7. View people’s information  
