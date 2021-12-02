@@ -14,6 +14,7 @@ urlpatterns = [
     path('addorphan/addorphrec/', views.add_orphan_record, name="add_orphan_record"),
 
     path('view/volunteerslist/updatevol/updaterecord/', views.update_record_v, name="update_record_v"),
+    path('view/volunteerslist/updatevol/approvevol/', views.approve_volunteer, name='approve_vounteer'),
     path('view/volunteerslist/updatevol/<str:volunteerid>/', views.update_volunteer, name="update_volunteer"),
 
     path('view/employeeslist/updateemp/updaterecord/', views.update_record_e, name="update_record_e"),

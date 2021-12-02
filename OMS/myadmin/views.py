@@ -70,7 +70,7 @@ def volunteers_list(request):
         return render(request, 'myadmin/not_admin.html', {"nav": navname})
 
     sql = fr"SELECT * FROM Volunteers"
-    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization'])
+    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization', 'Status'])
     return render(request, 'myadmin/volunteers_list.html', {"volunteers":volunteers, "titles": list(volunteers[0].keys()), "nav": navname}) 
 
 def view_list(request):
@@ -167,7 +167,7 @@ def update_volunteer(request, volunteerid):
     volid = volunteerid.split('=')[1]
 
     sql = fr"select * from Volunteers where CNIC='{volid}'"
-    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization'])
+    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization', 'Status'])
     
     print("updating this volunteer:", result)
     
@@ -175,8 +175,29 @@ def update_volunteer(request, volunteerid):
     utype = request.session.get('usertype')
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
-        
+
+    status = result[0]['Status']
+    if status == 'Pending':
+        deptid = result[0]['DeptID']
+        sql = fr"SELECT DeptName FROM Department WHERE DeptID = '{deptid}'"
+        department = executeSQL(sql, ['department'])[0]['department']
+        return render(request, 'myadmin/approve_volunteer.html', {'result':result[0], 'Department':department, 'nav': which_nav(request)})
+
     return render(request, 'myadmin/update_volunteer.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+
+def approve_volunteer(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+
+    cnic = request.POST['cnic']
+    if request.method == 'POST':
+        status = request.POST['status']
+        sql = fr"Update Volunteers set Status='{status}' where CNIC='{cnic}';"
+        executeSQL(sql)
+    return redirect('myadmin:volunteers_list')
+    
 
 def update_record_v(request):
     logged_in = request.session.get('logged_in')
