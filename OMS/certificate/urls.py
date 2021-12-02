@@ -5,6 +5,7 @@ from . import views
 app_name = 'certificate'
 
 urlpatterns = [
-    path('', views.download),
+    path('', views.certificate),
+    path('download/', views.download),
     
 ]

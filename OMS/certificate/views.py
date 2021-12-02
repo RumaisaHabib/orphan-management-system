@@ -17,48 +17,58 @@ from reportlab.lib.pagesizes import letter
 
 # Create your views here.
 
+def certificate(request):
+    return render(request, "certificate/certificate.html",{"nav": which_nav(request)})
+
+
 
 def download(request):
     #create bytestream buffer
-    buf = io.BytesIO()
-    #create canvas
-    c = canvas.Canvas(buf, pagesize= letter, bottomup=0)
-    # create text object
-    text_ob = c.beginText()
-    text_ob.setTextOrigin(inch, inch)
-    text_ob.setFont("Helvetica", 14)
-    
- 
-    # remove this after database is ready
-    # sql = fr"INSERT INTO Volunteers (CNIC, DeptID, Name, Age, Sex, JoinDate, ContractEndDate, Phone, Email, Organization) VALUES('3342843729394', '1', 'Alina','17', 'Female', '666666', '999999', '57657657', 'me@ffdg', 'PSRD');"
-    # executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
-    # remove til here
-
-    sql = f"SELECT * FROM Volunteers WHERE CNIC='6969696969695'"
-    volunteer = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
-    # text in the certifcate  
-    lines = [
-        "To whom it may concern.",
-        " ",
-        "This is to certify that " + volunteer[0]['Name'] + " has volunteered",
-        "at our Orphanage since " + str(volunteer[0]['JoinDate']) + " till " + str(volunteer[0]['ContractEndDate']),
-        " ",
-        "This certificate appreciates the exemplary work done by the volunteer in", 
-        "bringing happiness and joy in children's lives.",
-        " ",
-        "Regards,",
-        "Happy Hearts Orphanage",
-        " "
-        " ",        
-        "This is a computer-generated report and does not need a signature.",
-    ]
+    if request.method=="POST":
+        buf = io.BytesIO()
+        #create canvas
+        c = canvas.Canvas(buf, pagesize= letter, bottomup=0)
+        # create text object
+        text_ob = c.beginText()
+        text_ob.setTextOrigin(inch, inch)
+        text_ob.setFont("Helvetica", 14)
         
-    for line in lines:
-        text_ob.textLine(line)
     
-    c.drawText(text_ob)
-    c.showPage()
-    c.save()
-    buf.seek(0)
-    
-    return FileResponse(buf, as_attachment= True, filename= 'Certificate.pdf')
+        # remove this after database is ready
+        # sql = fr"INSERT INTO Volunteers (CNIC, DeptID, Name, Age, Sex, JoinDate, ContractEndDate, Phone, Email, Organization) VALUES('3342843729394', '1', 'Alina','17', 'Female', '666666', '999999', '57657657', 'me@ffdg', 'PSRD');"
+        # executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
+        # remove til here
+        cnic = request.POST["CNIC"]
+        name = request.POST["name"]
+        sql = f"SELECT * FROM Volunteers WHERE CNIC='{cnic}'"
+        
+        volunteer = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Email', 'Organization'])
+        if len(volunteer)<1:
+            return render(request, "certificate/error.html",{"nav": which_nav(request)})
+        # text in the certifcate  
+
+        lines = [
+            "To whom it may concern.",
+            " ",
+            "This is to certify that " + name + " has volunteered",
+            "at our Orphanage since " + str(volunteer[0]['JoinDate']) + " till " + str(volunteer[0]['ContractEndDate']),
+            " ",
+            "This certificate appreciates the exemplary work done by the volunteer in", 
+            "bringing happiness and joy in children's lives.",
+            " ",
+            "Regards,",
+            "Happy Hearts Orphanage",
+            " "
+            " ",        
+            "This is a computer-generated report and does not need a signature.",
+        ]
+            
+        for line in lines:
+            text_ob.textLine(line)
+        
+        c.drawText(text_ob)
+        c.showPage()
+        c.save()
+        buf.seek(0)
+        
+        return FileResponse(buf, as_attachment= True, filename= 'Certificate.pdf')

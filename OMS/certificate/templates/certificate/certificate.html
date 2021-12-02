@@ -1,0 +1,50 @@
+{% extends nav %}
+{% block content %}
+<!-- <input>
+<button class="customButton" type="button" onclick="getCert()">Get Certificate</button> -->
+
+
+<body>
+    <div class = "center-align">
+      <div class="row">
+        <div class="col s4 push-s4">
+          <div class="card">
+            <div class="card-content" style="min-height: 300px;">
+              <span class="card-title"><h3>Download Certificate</h3></span>
+              <form class="container volunteer-form"  action= "download/" method="POST">
+                {% csrf_token %}
+                <div class = "row">
+                  <div class="input-field col s12">
+                    <input name="CNIC" id="CNIC" type="text" required>
+                    <label for="CNIC">CNIC</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input name="name" id="name" type="text"required>
+                    <label for="name">Preferred Name</label>
+                  </div>
+                  
+                  <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light" type="submit" name="action">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+
+
+
+{% endblock %}
+
+<script type="text/javascript">
+    function getCert()
+    {
+            window.location.replace("/certificate/");
+    }
+</script>
