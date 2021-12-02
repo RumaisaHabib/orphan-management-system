@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.db import connection
 from helpers.format import format_query, executeSQL
 import hashlib
+from helpers.navbar import which_nav
 
 from home.views import index
 
@@ -27,6 +28,13 @@ def login(request):
                     if utype != "admin":
                         res = executeSQL(fr"select CNIC from Users where Email='{email}' and Password='{hashed_pwd}' AND Usertype = '{utype}';", ["cnic"])
                         request.session['cnic'] = res[0]['cnic']
+                        cnic = request.session['cnic']
+                    if utype == 'volunteer':
+                        sql = fr"SELECT Status FROM Volunteers WHERE CNIC = '{cnic}'"
+                        status = executeSQL(sql, ['Status'])[0]['Status']
+                        if res == 'Pending' or 'Denied':
+                            request.session['logged_in'] = 0
+                            return render(request, 'account/volunteerfail.html', {'nav': which_nav(request), 'status':status})
                     return redirect('home:index') # This should redirect to success page or back home
             return redirect('home:index') # This branch will be for failure
     

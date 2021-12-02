@@ -20,13 +20,14 @@ def signupVolunteer(request):
         joindate=request.POST["joindate"]
         dd=request.POST["deptid"]
         name = request.POST["name"]
+        status = 'Pending'
         
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
         
         usertype = "volunteer"
         try:
             # add this parent
-            sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{email}','{organization}' )"
+            sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{email}','{organization}', '{status}')"
             executeSQL(sql)
 
             # now add this user
