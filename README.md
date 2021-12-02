@@ -53,7 +53,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 12. Approve adoption application -
 - [x] 13. Login
 - [ ] 14. Apply for department role
-- [ ] 15. View department information
+- [x] 15. View department information
 - [ ] 16. Manage appointment - 
 - [x] 17. Donation
 - [x] 18. Feedback
