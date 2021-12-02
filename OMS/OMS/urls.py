@@ -25,5 +25,6 @@ urlpatterns = [
     path('certificate/', include("certificate.urls")),
     path('parent/', include("parent.urls")),
     path('donate/', include('donation.urls')),
+    path('department/', include("department.urls")),
     path('', include("home.urls")),
 ]
