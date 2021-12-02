@@ -44,7 +44,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 3. Mass Email - 
 - [x] 4. Post-adoption request process - 
 - [ ] 5. Add new employees 
-- [ ] 6. Approve volunteer requests
+- [x] 6. Approve volunteer requests
 - [x] 7. View people’s information  
 - [ ] 8. Fund management
 - [x] 9. Notifying parents upon adoption result - 
@@ -52,7 +52,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 11. Sign up
 - [x] 12. Approve adoption application -
 - [x] 13. Login
-- [ ] 14. Apply for department role
+- [x] 14. Apply for department role
 - [x] 15. View department information
 - [ ] 16. Manage appointment - 
 - [x] 17. Donation
