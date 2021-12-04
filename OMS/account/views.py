@@ -31,8 +31,9 @@ def login(request):
                         cnic = request.session['cnic']
                     if utype == 'volunteer':
                         sql = fr"SELECT Status FROM Volunteers WHERE CNIC = '{cnic}'"
-                        status = executeSQL(sql, ['Status'])[0]['Status']
-                        if res == 'Pending' or 'Denied':
+                        status = executeSQL(sql, ['Status'])
+                        if res == 'Pending' or res == 'Denied':
+                            print(res)
                             request.session['logged_in'] = 0
                             return render(request, 'account/volunteerfail.html', {'nav': which_nav(request), 'status':status})
                     return redirect('home:index') # This should redirect to success page or back home
