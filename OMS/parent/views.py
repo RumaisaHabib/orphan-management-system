@@ -70,6 +70,6 @@ def bookAppointment(request):
 	time = request.POST["appointment"]
 	parentcnic = request.session.get("cnic")
 
-	executeSQL(fr"insert into Appointment (ParentCNIC, AdminCNIC, AppointmentTime) values('{parentcnic}', '{adminCnic}', '{time}')")
+	executeSQL(fr"insert into Appointment (ParentCNIC, AdminCNIC, AppointmentTime, Status) values('{parentcnic}', '{adminCnic}', '{time}', 'Pending')")
 
 	return redirect("/")
