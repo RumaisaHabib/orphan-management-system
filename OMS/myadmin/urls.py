@@ -31,4 +31,5 @@ urlpatterns = [
     path('appointmentrequest/', views.appointment_list, name="appointmentspage"),
     path('appointmentrequest/updateappointment/<str:appointmentid>', views.update_appointment_view, name="appointmentsupdatepage"),
     path('appointmentrequest/updateappointment/update/', views.update_appointment, name='update-request'),
+    path('addemployee/', views.add_employee, name="add_employee"),
 ]

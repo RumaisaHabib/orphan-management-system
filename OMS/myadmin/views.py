@@ -293,7 +293,7 @@ def update_request(request):
         appid = request.POST['applicationid']
         sql = fr"UPDATE AdoptionRequest SET Status='{status}' WHERE ApplicationID='{appid}'"
         executeSQL(sql)
-        sql = fr"select Email from AdoptionRequest inner join Users on AdoptionRequest.ParentCNIC=Users.CNIC where ApplicationID={appid}"
+        sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
         address = executeSQL(sql, ['Email'])
         if status=="Approved":
             message= "We are pleased to inform you that your adoption application #" + appid + " has been accepted!"
@@ -322,51 +322,20 @@ def mass_email(request):
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
 
 
-
-        
-        
-
-def appointment_list(request):
-    logged_in = request.session.get('logged_in')
-    utype = request.session.get('usertype')
-    if utype != 'admin':
-        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
-
-    sql = fr"SELECT * FROM Appointment"
-    result = executeSQL(sql, ['AppointmentID', 'ParentCNIC', 'AdminCNIC', 'AppointmentTime', 'Status'])
-    return render(request, 'myadmin/appointment_list.html', {"requests":result,"titles": list(result[0].keys()), "nav": which_nav(request)})
-
-def update_appointment_view(request, appointmentid):
-    logged_in = request.session.get('logged_in')
-    utype = request.session.get('usertype')
-    if utype != 'admin':
-        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
-
-    sql = fr"SELECT * FROM Appointment WHERE AppointmentID='{appointmentid}'"
-    result = executeSQL(sql, ['AppointmentID', 'ParentCNIC', 'AdminCNIC', 'AppointmentTime', 'Status'])
-    return render(request, 'myadmin/appointment_edit.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
-
-def update_appointment(request):
+def add_employee(request):
     utype = request.session.get('usertype')
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     if request.method == 'POST':
-        status = request.POST['status']
-        appid = request.POST['appointmentid']
-
-        sql = fr"UPDATE Appointment SET Status='{status}' WHERE AppointmentID='{appid}'"
+        CNIC = request.POST["CNIC"]
+        Name = request.POST["name"]
+        join = request.POST["JoinDate"]
+        end=request.POST["EndDate"]
+        email=request.POST["email"]
+        dept=request.POST["deptid"]
+        salary=request.POST["salary"]
+        phone=request.POST["phone"]
+        dob=request.POST["dateofbirth"]
+        
+        sql = fr"INSERT INTO Employees (CNIC, DeptID, Name, DateOfBirth, JoinDate, ContractEndDate, Email, phone, Salary) VALUES (CNIC, dept, Name, dob, join, end, email, phone, salary)"
         executeSQL(sql)
-        sql = fr"select Email from Appointment inner join Users on Appointment.ParentCNIC=Users.CNIC where AppointmentID='{appid}'"
-        address = executeSQL(sql, ['Email'])
-        if status=="Approved":
-            message= "We are pleased to inform you that your appointment slot with id " + appid + " has been scheduled!"
-            subject= "Congratulations!"
-        elif status=="Denied":
-            message= "We are sorry to say that your appointment #" + appid + "could not be schedule. Kindly make another appointment request."
-            subject= "Apologies"
-        else:
-            print("Email error")
-            return redirect('myadmin:adoption-request-list')
-        send_email([address[0]['Email']], message, subject)
-
-    return redirect('myadmin:appointmentspage')
