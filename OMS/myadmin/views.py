@@ -382,5 +382,14 @@ def add_employee(request):
         phone=request.POST["phone"]
         dob=request.POST["dateofbirth"]
         
-        sql = fr"INSERT INTO Employees (CNIC, DeptID, Name, DateOfBirth, JoinDate, ContractEndDate, Email, phone, Salary) VALUES (CNIC, dept, Name, dob, join, end, email, phone, salary)"
-        executeSQL(sql)
+        
+        sql = fr"INSERT INTO Employees (CNIC, DeptID, Name, DateOfBirth, JoinDate, ContractEndDate, Email, phone, Salary) VALUES ('{CNIC}', '{dept}', '{Name}', '{dob}', '{join}', '{end}', '{email}', '{phone}', '{salary}')"
+        # executeSQL(sql)
+        
+        print([x for x in request.POST.items()])
+        try:
+            executeSQL(sql)
+        except:
+            return render(request, 'myadmin/cnic_exists.html', {"nav": which_nav(request)})
+        
+    return render(request, 'myadmin/addemployee.html', {"nav": which_nav(request)})

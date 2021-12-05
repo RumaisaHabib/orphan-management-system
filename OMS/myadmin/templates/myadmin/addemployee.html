@@ -7,14 +7,14 @@
       <div class="col s4 push-s4">
         <div class="card">
           <div class="card-content">
-            <span class="card-title"><h3>Update employee data</h3></span>
-            <form class="container" action= "../updaterecord/" method="POST">
+            <span class="card-title"><h3>Add Employee</h3></span>
+            <form class="container" action= "/myadmin/addemployee/" method="POST">
               {% csrf_token %}
               <div class = "row">
                 <div class="input-field col s12">
-                  <input type="hidden" id="CNIC" name="CNIC" value="{{result.CNIC}}">          
-                  <span><b>CNIC</b> {{result.CNIC}}</span>
-                </div>
+                    <input name="CNIC" id="CNIC" type="text" required>
+                    <label for="CNIC">CNIC</label>
+                  </div>
                 <div class="input-field col s12">
                   <input name="name" id="name" type="text" value="{{result.Name}}" required>
                   <label for="name">Name</label>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="input-field col s12">
                   <button class="btn waves-effect waves-light" type="submit" name="action">
-                    Update
+                    Add
                   </button>
                 </div>
               </div>
