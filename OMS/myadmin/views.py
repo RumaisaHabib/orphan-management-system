@@ -320,5 +320,9 @@ def mass_email(request):
         send_email(addresses, content, subject)
         return redirect('/myadmin/')
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
+
+
+
+        
         
     
