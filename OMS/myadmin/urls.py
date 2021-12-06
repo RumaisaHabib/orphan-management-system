@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('adoptionrequest/', views.adoption_request_list, name='adoption-request-list'),
     path('adoptionrequest/updaterequest/<str:applicationid>', views.update_request_view, name='update-request-view'),
-    path('adoptionrequest/updaterequest/update', views.update_request, name='update-request'),
+    path('adoptionrequest/updaterequest/update/', views.update_request, name='update-request'),
     path('mass_email/', views.mass_email, name='mass-email'),
 
     path('appointmentrequest/', views.appointment_list, name="appointmentspage"),

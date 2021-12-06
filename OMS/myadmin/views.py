@@ -293,7 +293,8 @@ def update_request(request):
         appid = request.POST['applicationid']
         sql = fr"UPDATE AdoptionRequest SET Status='{status}' WHERE ApplicationID='{appid}'"
         executeSQL(sql)
-        sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
+        #sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
+        sql = fr"SELECT Email FROM ((SELECT * FROM Users INNER JOIN AdoptionRequest WHERE AdoptionRequest.ApplicationID='{appid}') as joined)"
         address = executeSQL(sql, ['Email'])
         if status=="Approved":
             message= "We are pleased to inform you that your adoption application #" + appid + " has been accepted!"
