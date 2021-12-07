@@ -38,7 +38,4 @@ urlpatterns = [
     path('addtransaction/addtransdon/', views.add_trans_don, name="addDonationPage"),
     path('addtransaction/addtransexp/', views.add_trans_exp, name="addExpensePage"),
     path('viewtransaction/>', views.view_transaction, name="viewtransactionpage"),
-    
-    
-    
 ]

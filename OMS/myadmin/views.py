@@ -293,8 +293,7 @@ def update_request(request):
         appid = request.POST['applicationid']
         sql = fr"UPDATE AdoptionRequest SET Status='{status}' WHERE ApplicationID='{appid}'"
         executeSQL(sql)
-        #sql = fr"SELECT Email FROM ((SELECT * FROM ApplicantParent INNER JOIN AdoptionRequest ON ApplicantParent.CNIC=AdoptionRequest.ParentCNIC) as joined) WHERE ApplicationID='{appid}'"
-        sql = fr"SELECT Email FROM ((SELECT * FROM Users INNER JOIN AdoptionRequest WHERE AdoptionRequest.ApplicationID='{appid}') as joined)"
+        sql = fr"select Email from AdoptionRequest inner join Users on AdoptionRequest.ParentCNIC=Users.CNIC where ApplicationID={appid}"
         address = executeSQL(sql, ['Email'])
         if status=="Approved":
             message= "We are pleased to inform you that your adoption application #" + appid + " has been accepted!"
@@ -322,7 +321,7 @@ def mass_email(request):
         send_email(addresses, content, subject)
         return redirect('/myadmin/')
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
-
+        
 
 def appointment_list(request):
     logged_in = request.session.get('logged_in')
@@ -368,6 +367,73 @@ def update_appointment(request):
         send_email([address[0]['Email']], message, subject)
 
     return redirect('myadmin:appointmentspage')
+
+def add_transaction(request):
+    departments = executeSQL("select DeptID, DeptName from Department", ["id", "name"])
+    print(departments)
+    return render(request, "myadmin/add_transaction.html", {"dept": departments,"nav": which_nav(request)} )
+
+
+def add_trans_don(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+
+    if request.method == "POST" and logged_in and utype == 'admin':
+        transID = request.POST["transactionid"]
+        Amount = request.POST["amount"]
+        Donor = request.POST["donor"]
+        DateOfDonation=request.POST["donationdate"]
+        X=-1
+        Y=None
+        sql = fr"INSERT INTO Transactions (ID, Amount, DeptID, Donor, DateOfExpense, DateOfDonation) VALUES('{transID}', '{Amount}','{X}', '{Donor}','{Y}','{DateOfDonation}');"
+        print([x for x in request.POST.items()])
+        try:
+            executeSQL(sql)
+        except:
+            return render(request, 'myadmin/transid_exists.html', {"nav": which_nav(request)})
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    
+    return redirect('/myadmin/add_transaction.html/', {"nav": which_nav(request)})
+
+def add_trans_exp(request):
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    print("lmaaosoajdiojadjadhs")
+    if request.method == "POST" and logged_in and utype == 'admin':
+        transID = request.POST["transactionid"]
+        Amount = request.POST["amount"]
+        DeptID = request.POST["deptid"]
+        DateOfExpense=request.POST["expensedate"]
+        X="None"
+        Y=None
+        sql = fr"INSERT INTO Transactions (ID, Amount, DeptID, Donor, DateOfExpense,DateOfDonation) VALUES('{transID}', '{Amount}', '{DeptID}','{X}','{DateOfExpense}','{Y}');"
+        print([x for x in request.POST.items()])
+        try:
+            executeSQL(sql)
+        except:
+            return render(request, 'myadmin/transid_exists.html', {"nav": which_nav(request)})
+    
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    
+    return redirect('/myadmin/add_transaction.html/', {"nav": which_nav(request)})
+
+
+
+def view_transaction(request):
+    sql = fr"select * from Transactions"
+    result = executeSQL(sql, ['ID','Amount' ,'DeptID', 'Donor', 'DateOfExpense', 'DateOfDonation'])
+    sql2 = fr"select SUM(Amount) from Transactions"
+    balance=executeSQL(sql,['Balance'])
+    print("viewing this volunteer:", result)
+    
+    logged_in = request.session.get('logged_in')
+    utype = request.session.get('usertype')
+    if utype != 'admin':
+        return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
+    return render(request, 'myadmin/view_transaction.html', {"result":result,"titles": list(result[0].keys()),"balance":balance , "nav": which_nav(request)})
 
 def add_employee(request):
     utype = request.session.get('usertype')
