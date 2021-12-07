@@ -123,7 +123,7 @@ def add_orphan_record(request):
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     
-    return redirect('/myadmin/addorphan/', {"nav": which_nav(request)})
+    return redirect('myadmin:orphans_list')
     
 def update_orphan(request, orphanid):
 

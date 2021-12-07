@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpRequest
 from django.db import connection
 from helpers.format import executeSQL
 import hashlib
+from helpers.user import exists
+from helpers.navbar import which_nav
 
 # Create your views here.
 def signupVolunteer(request):
@@ -25,6 +27,8 @@ def signupVolunteer(request):
         hashed_pwd = str(int(hashlib.sha256(pwd.encode('utf-8')).hexdigest(), 16) % 10**8)
         
         usertype = "volunteer"
+        if exists(email, usertype):
+            return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
         try:
             # add this parent
             sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{email}','{organization}', '{status}')"
@@ -36,7 +40,7 @@ def signupVolunteer(request):
             
         except Exception as e:
             print('ERROR SIGNING UP', e)
-            return render(request, 'signup/signuperror.html')
+            return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
  
     if request.session.get("logged_in")==1:
         print("you're already logged in")
@@ -67,6 +71,9 @@ def signupParent(request):
         phone = request.POST["phone"]
         usertype = "parent"
 
+        if exists(email, usertype):
+            return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
+
         try:
             # add this parent
             sql = fr"insert into ApplicantParent values('{cnic}', '{name}', '{dob}', '{maritalStat}', '{profession}', {earning}, {children}, '{address}', {phone})"
@@ -77,7 +84,7 @@ def signupParent(request):
             executeSQL(sql)
         except Exception as e:
             print('ERROR SIGNING UP', e)
-            return render(request, 'signup/signuperror.html')
+            return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
 
         return redirect('/')
 
