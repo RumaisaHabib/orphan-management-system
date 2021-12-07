@@ -1,0 +1,63 @@
+{% extends nav %}
+{% block content %}
+<style>
+    table
+    {
+        margin: auto;
+        width: 60%;
+    }
+    tr:nth-child(even)
+    {
+        background-color: #e8e8e8;
+    }
+    td
+    {
+        border-radius: 0;
+    }
+    .hoverable-record
+    {
+        transition: background-color 0.5s;
+    }
+    .hoverable-record:hover
+    {
+        background-color: lightcoral;
+    }
+</style>
+<body>
+    <div class = "center-align">
+        <div class="row">
+            <div>
+                <span class="card-title"><h3>Transactions</h3></span>
+                <table>
+                    <thead>
+                        <tr>
+                            {% for title in titles %}
+                                <th>{{title}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for res in result %}
+                            <tr class="hoverable-record" id="n{{dept.CNIC}}">
+                                {% for key, value in res.items %}
+                                    <td>{{value}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>"balance"</td>
+                            <td>{{value}}</td>
+                            <td>{{value}}</td>
+                            <td>balance[0]</td>
+                            
+                        </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
