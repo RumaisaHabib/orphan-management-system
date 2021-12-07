@@ -317,7 +317,8 @@ def mass_email(request):
         content = request.POST['email-content']
         subject = request.POST['email-subject']
         sql = fr"SELECT Email FROM Users"
-        addresses = executeSQL(sql, ['Email', 'Password', 'Usertype'])
+        addresses = executeSQL(sql, ['Email'])
+        print(addresses)
         send_email(addresses, content, subject)
         return redirect('/myadmin/')
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
