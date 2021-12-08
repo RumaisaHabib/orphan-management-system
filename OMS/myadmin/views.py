@@ -426,7 +426,7 @@ def view_transaction(request):
     sql = fr"select * from Transactions"
     result = executeSQL(sql, ['ID','Amount' ,'DeptID', 'Donor', 'DateOfExpense', 'DateOfDonation'])
     sql2 = fr"select SUM(Amount) from Transactions"
-    balance=executeSQL(sql,['Balance'])
+    balance=executeSQL(sql2,['Balance'])
     print("viewing this volunteer:", result)
     
     logged_in = request.session.get('logged_in')
