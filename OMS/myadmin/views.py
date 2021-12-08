@@ -5,6 +5,7 @@ from helpers.format import format_query
 from helpers.format import executeSQL
 from helpers.navbar import which_nav
 from helpers.email import send_email
+from helpers.idgenerator import randomStr
 
 # Create your views here.
 def admin(request):
@@ -400,40 +401,43 @@ def add_trans_don(request):
 def add_trans_exp(request):
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
-    print("lmaaosoajdiojadjadhs")
     if request.method == "POST" and logged_in and utype == 'admin':
-        transID = request.POST["transactionid"]
+        transID = randomStr()
         Amount = request.POST["amount"]
+        Amount1=int(Amount)*-1
         DeptID = request.POST["deptid"]
-        DateOfExpense=request.POST["expensedate"]
-        X="None"
-        Y=None
-        sql = fr"INSERT INTO Transactions (ID, Amount, DeptID, Donor, DateOfExpense,DateOfDonation) VALUES('{transID}', '{Amount}', '{DeptID}','{X}','{DateOfExpense}','{Y}');"
+        Date=request.POST["expensedate"]
+        sql = fr"INSERT INTO Expenses (ID, Amount, DeptID, Date) VALUES('{transID}', {Amount1}, '{DeptID}','{Date}');"
+        print(sql)
         print([x for x in request.POST.items()])
         try:
             executeSQL(sql)
-        except:
+        except Exception as E:
+            print(E)
             return render(request, 'myadmin/transid_exists.html', {"nav": which_nav(request)})
     
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
     
-    return redirect('/myadmin/add_transaction.html/', {"nav": which_nav(request)})
+    return redirect('/myadmin/addtransaction/', {"nav": which_nav(request)})
 
 
 
 def view_transaction(request):
-    sql = fr"select * from Transactions"
-    result = executeSQL(sql, ['ID','Amount' ,'DeptID', 'Donor', 'DateOfExpense', 'DateOfDonation'])
-    sql2 = fr"select SUM(Amount) from Transactions"
-    balance=executeSQL(sql2,['Balance'])
+    sql = fr"SELECT ID AS ID, Amount, Date FROM Expenses union select TransactionID AS ID, Amount, Date from Donation order by Date;"
+    result = executeSQL(sql, ['ID','Amount' ,'Date'])
+    sql2 = fr"select SUM(Amount) from Expenses"
+    sql3 = fr"select SUM(Amount) from Donation"
+    balancee=executeSQL(sql2,['Balance'])
+    balances=executeSQL(sql3,['Balance'])
+    total= int(balancee[0]['Balance'])+int(balances[0]['Balance'])
     print("viewing this volunteer:", result)
     
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
-    return render(request, 'myadmin/view_transaction.html', {"result":result,"titles": list(result[0].keys()),"balance":balance , "nav": which_nav(request)})
+    return render(request, 'myadmin/view_transaction.html', {"result":result,"titles": list(result[0].keys()),"balance":total , "nav": which_nav(request)})
 
 def add_employee(request):
     utype = request.session.get('usertype')
@@ -461,3 +465,4 @@ def add_employee(request):
             return render(request, 'myadmin/cnic_exists.html', {"nav": which_nav(request)})
         
     return render(request, 'myadmin/addemployee.html', {"nav": which_nav(request)})
+

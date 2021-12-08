@@ -7,56 +7,15 @@
       <div class="col s4 push-s4">
         <div class="card">
           <div class="card-content">
-            <span class="card-title"><h3>Add Transaction</h3></span>
+            <span class="card-title"><h3>Add Expense</h3></span>
             
-            <div class="input-field col s12">
-              <select name="transactiontype" id="op1" onchange="optionSelected()" required>
-                <option value="" disabled selected>Choose your option</option>
-                <option value="expense">Expense</option>
-                <option value="donation">Donation</option>
-              </select>
-              <label for="transactiontype">Transaction Type </label>
-            </div>
-
-
-            <form class="container donation-form" action= "addtransdon/" method="POST">
-              {% csrf_token %}
-              <div class = "row">
-                <div class="input-field col s12">
-                  <input name="transactionid" id="transactionid" type="number" required>
-                  <label for="transactionid">Transaction Id</label>
-                </div>
-
-                <div class="input-field col s12">
-                  <input name="amount" id="amount" type="number"  min="1" required>
-                  <label for="amount">Amount Doanted</label>
-                </div>
-                <div class="input-field col s12">
-                    <input name="donor" id="donor" type="text"  >
-                    <label for="donor">Donor name (optional)</label>
-                </div> 
-                <div class="input-field col s12">
-                    <input name="donationdate" id="donationdate" type="datetime-local"  >
-                    <label for="donationdate">Donated on</label>
-                </div>        
-                <div class="input-field col s12">
-                  <button class="btn waves-effect waves-light" type="submit" name="action">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </form>
+          
 
             <form class="container expense-form" action= "addtransexp/" method="POST">
                 {% csrf_token %}
-                <div class = "row">
+                <div class = "row">  
                   <div class="input-field col s12">
-                    <input name="transactionid" id="transactionid" type="number" required>
-                    <label for="transactionid">Transaction Id</label>
-                  </div>
-  
-                  <div class="input-field col s12">
-                    <input name="amount" id="amount" type="number"  max="-1" required>
+                    <input name="amount" id="amount" type="number"  min="1" required>
                     <label for="amount">Expense Amount(negative)</label>
                   </div>
                   <div class="input-field col s12">
@@ -87,23 +46,7 @@
 </body>
 
 <script>
-  function optionSelected()
-  {
-    // change the form based on the selection
-    ele = document.getElementById("op1");
-
-    if (ele.value === "expense")
-    {
-      document.getElementsByClassName('donation-form')[0].style.display = "none";
-      document.getElementsByClassName('expense-form')[0].style.display = "block";
-    }
-    else
-    {
-      document.getElementsByClassName('donation-form')[0].style.display = "block";
-      document.getElementsByClassName('expense-form')[0].style.display = "none";
-    }
-    // console.log($('#useroption').value);
-  }
+ 
 
   $(document).ready(function(){
     $('select').formSelect();
