@@ -12,3 +12,9 @@ def send_email(addresses, content, subject):
         recipient_list=addresses,
         fail_silently=False,
     )
+
+def extract_emails(emails):
+    result = []
+    for item in emails:
+        result.append(item['Email'])
+    return result

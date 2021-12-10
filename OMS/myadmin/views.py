@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from helpers.format import format_query
 from helpers.format import executeSQL
 from helpers.navbar import which_nav
-from helpers.email import send_email
+from helpers.email import send_email, extract_emails
 from helpers.idgenerator import randomStr
 
 # Create your views here.
@@ -318,7 +318,7 @@ def mass_email(request):
         subject = request.POST['email-subject']
         sql = fr"SELECT Email FROM Users"
         addresses = executeSQL(sql, ['Email'])
-        print(addresses)
+        addresses = extract_emails(addresses)
         send_email(addresses, content, subject)
         return redirect('/myadmin/')
     return render(request, 'myadmin/mass_email.html',{"nav": which_nav(request)})
