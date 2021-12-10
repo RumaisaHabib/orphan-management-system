@@ -37,16 +37,15 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 
 
 ## Use Cases
-![image](https://user-images.githubusercontent.com/68891347/143782026-fd574bd3-d295-457e-817e-a9db2f785645.png)
-
+![image](https://user-images.githubusercontent.com/68891347/145594212-c53d12e5-806d-4534-aafe-8fff7e95e2f4.png)
 - [x] 1. Admitting new orphans
 - [x] 2. Updating Orphan info
 - [x] 3. Mass Email - 
 - [x] 4. Post-adoption request process - 
-- [ ] 5. Add new employees 
+- [x] 5. Add new employees 
 - [x] 6. Approve volunteer requests
 - [x] 7. View people’s information  
-- [ ] 8. Fund management
+- [x] 8. Fund management
 - [x] 9. Notifying parents upon adoption result - 
 - [x] 10. Update Information(Employee/volunteer)
 - [x] 11. Sign up
@@ -54,7 +53,7 @@ git clone "https://github.com/RumaisaHabib/orphan-management-system.git"
 - [x] 13. Login
 - [x] 14. Apply for department role
 - [x] 15. View department information
-- [ ] 16. Manage appointment - 
+- [x] 16. Manage appointment - 
 - [x] 17. Donation
 - [x] 18. Feedback
 - [x] 19. Download certificate
