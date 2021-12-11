@@ -203,7 +203,11 @@ def approve_volunteer(request):
     cnic = request.POST['cnic']
     if request.method == 'POST':
         status = request.POST['status']
+        sql = fr"select Email from Users where CNIC='{cnic}' and Usertype='Volunteer'"
+        email = executeSQL(sql, ['Email'])[0]['Email']
         sql = fr"Update Volunteers set Status='{status}' where CNIC='{cnic}';"
+        message = f"Hello\n\n Your Application status with this orphanage is {status}\n\nBest Regards,\nOMS"
+        send_email([email], message, "Volunteer Application Status")
         executeSQL(sql)
     return redirect('myadmin:volunteers_list')
     

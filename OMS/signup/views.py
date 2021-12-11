@@ -9,9 +9,7 @@ from helpers.navbar import which_nav
 # Create your views here.
 def signupVolunteer(request):
     if request.method == "POST":
-        print(request.POST)
         email = request.POST["email"]
-        print(email)
         pwd = request.POST["password"]
         cnic = str(request.POST["CNIC"])
         age=request.POST["age"]
@@ -31,7 +29,7 @@ def signupVolunteer(request):
             return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
         try:
             # add this parent
-            sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{email}','{organization}', '{status}')"
+            sql = fr"insert into Volunteers values('{cnic}', '{dd}', '{name}', '{age}', '{sex}', '{joindate}', '{contractenddate}', {phone}, '{organization}', '{status}')"
             executeSQL(sql)
 
             # now add this user
@@ -52,7 +50,6 @@ def signupVolunteer(request):
 
 def signup(request):
     departments = executeSQL("select DeptID, DeptName from Department", ["id", "name"])
-    print(departments)
     return render(request, "signup/signup.html", {"dept": departments})
 
 def signupParent(request):
