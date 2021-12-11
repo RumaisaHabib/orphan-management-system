@@ -121,8 +121,16 @@
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-               console.log(data); // show response from the php script.
-               $("#tablebody").html(data)
+                // console.log(data);
+                $("#tablebody").html(data)
+                $(".hoverable-record").click(function() {
+                // have to re-add the event listener as the table was refreshed, and rows were added again.
+                if (confirm("Are you sure you want to initiate a request to adopt this orphan?"))
+                {
+                    var myid = $(this).attr('id').replace('#', '').replace('n', '');
+                    window.location.replace("adoptorphan/id=" + myid);
+                    }
+                });
            }
        });
     });
