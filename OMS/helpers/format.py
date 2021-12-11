@@ -1,4 +1,5 @@
 from django.db import connection
+import datetime
 
 def format_query(data, attributes): 
     '''
@@ -18,7 +19,7 @@ def format_query(data, attributes):
     return result
 
 
-def executeSQL(sqlcom, colnames=[]):
+def executeSQL(sqlcom, colnames=[], parseForUpdate=False):
     '''
     Returns a list (results) of dictionaries (attributes of results) of the given query.
     If no colnames provided, it adds arbitrary names, such as col1, col2, col3 and so on.
@@ -40,4 +41,9 @@ def executeSQL(sqlcom, colnames=[]):
     result = []
     for row in data:
         result.append(dict(zip(colnames, row)))
+        if parseForUpdate:
+            for k, v in result[-1].items():
+                if type(v) == datetime.datetime:
+                    result[-1][k] = str(v).replace(' ', 'T')
+
     return result

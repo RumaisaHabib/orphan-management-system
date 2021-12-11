@@ -6,6 +6,7 @@ from helpers.format import executeSQL
 from helpers.navbar import which_nav
 from helpers.email import send_email, extract_emails
 from helpers.idgenerator import randomStr
+import datetime
 
 # Create your views here.
 def admin(request):
@@ -71,7 +72,10 @@ def volunteers_list(request):
         return render(request, 'myadmin/not_admin.html', {"nav": navname})
 
     sql = fr"SELECT * FROM Volunteers"
-    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization', 'Status'])
+    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Organization', 'Status'])
+    for x in volunteers:
+        x['Email'] = executeSQL(fr"select Email from Users where CNIC='{x['CNIC']}'", ['Email'])[0]['Email']
+
     return render(request, 'myadmin/volunteers_list.html', {"volunteers":volunteers, "titles": list(volunteers[0].keys()), "nav": navname}) 
 
 def view_list(request):
@@ -131,10 +135,10 @@ def update_orphan(request, orphanid):
     orphid = orphanid.split('=')[1]
 
     sql = fr"select * from Orphan where CNIC='{orphid}'"
-    result = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'SpecialNeeds'])
-    
+    result = executeSQL(sql, ['CNIC', 'Name', 'DateOfBirth', 'Education', 'Sex', 'SpecialNeeds'], True)
+
     print("updating this orphan:", result)
-    
+
     logged_in = request.session.get('logged_in')
     utype = request.session.get('usertype')
     if utype != 'admin':
@@ -168,7 +172,7 @@ def update_volunteer(request, volunteerid):
     volid = volunteerid.split('=')[1]
 
     sql = fr"select * from Volunteers where CNIC='{volid}'"
-    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization', 'Status'])
+    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Organization', 'Status'])
     
     print("updating this volunteer:", result)
     
@@ -184,7 +188,11 @@ def update_volunteer(request, volunteerid):
         department = executeSQL(sql, ['department'])[0]['department']
         return render(request, 'myadmin/approve_volunteer.html', {'result':result[0], 'Department':department, 'nav': which_nav(request)})
 
-    return render(request, 'myadmin/update_volunteer.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
+    email = executeSQL(fr"select Email from Users where CNIC='{volid}'", ['Email'])
+
+    result2 = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Organization', 'Status'], True)
+    result2[0]['Email'] = email[0]['Email']    
+    return render(request, 'myadmin/update_volunteer.html', {"result":result2[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
 
 def approve_volunteer(request):
     logged_in = request.session.get('logged_in')
@@ -220,17 +228,19 @@ def update_record_v(request):
         
         print([(x,k) for x,k in request.POST.items()])
     # ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization']
-        sql = fr"Update Volunteers set Name='{Name}', DeptID='{dept}', Age='{age}', JoinDate='{join}', Sex='{Sex}', ContractEndDate='{end}', Email='{email}', Organization='{org}', Phone='{phone}' where CNIC='{CNIC}';"
+        sql = fr"Update Volunteers set Name='{Name}', DeptID='{dept}', Age='{age}', JoinDate='{join}', Sex='{Sex}', ContractEndDate='{end}', Organization='{org}', Phone='{phone}' where CNIC='{CNIC}';"
         executeSQL(sql)
+
+        executeSQL(fr"Update Users set Email='{email}' where CNIC='{CNIC}'")
     
     return redirect('/myadmin/view/volunteerslist/')
 
 def update_employee(request, employeeid):
 
-    id = employeeid.split('=')[1]
+    eid = employeeid.split('=')[1]
 
-    sql = fr"select * from Employees where CNIC='{id}'"
-    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'DateOfBirth',  'JoinDate', 'ContractEndDate', 'Email','Phone', 'Salary'])
+    sql = fr"select * from Employees where CNIC='{eid}'"
+    result = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'DateOfBirth',  'JoinDate', 'ContractEndDate', 'Email','Phone', 'Salary'], True)
     
     print("updating this employee:", result)
     
