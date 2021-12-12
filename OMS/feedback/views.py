@@ -19,6 +19,6 @@ def submit(request):
         newid = len(result)
         sql = fr"INSERT INTO Feedback VALUES ('{newid}', '{cnic}', '{email}', '{feedback}')"
         executeSQL(sql)
-        return redirect("home:index")
+        return render(request, "feedback/messagereceived.html", {"nav": which_nav(request)})
     else:
         return render(request, "feedback/nofeed.html", {"nav": which_nav(request)})
