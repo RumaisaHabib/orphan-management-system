@@ -39,17 +39,21 @@
                     </thead>
                     <tbody>
                         {% for volunteer in volunteers %}
-                            <tr class="hoverable-record" id="n{{volunteer.CNIC}}">
+                            <tr class="hoverable-record" id="n{{volunteer.CNIC}}" style="display: none;">
                                 {% for key, value in volunteer.items %}
                                     <td>{{value}}</td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
                     </tbody>
+                    
                 </table>
             </div>
         </div>
+        <a href="#" id="load">Load More</a>
+    <br>
     </div>
+    
 </body>
 
 <script>
@@ -57,6 +61,16 @@
         var myid = $(this).attr('id').replace('#', '').replace('n', '');
         window.location.replace("updatevol/id=" + myid);
     });
+    $(function(){
+    $("tr").slice(0, 10).show(); // select the first ten
+    $("#load").click(function(e){ // click event for load more
+        e.preventDefault();
+        $("tr:hidden").slice(0, 10).show(); // select next 10 hidden divs and show them
+        if($("tr:hidden").length == 0){ // check if any hidden divs still exist
+            alert("No more to view"); // alert if there are none left
+        }
+    });
+});
 </script>
 
 {% endblock %}

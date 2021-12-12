@@ -71,10 +71,10 @@ def volunteers_list(request):
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": navname})
 
-    sql = fr"SELECT * FROM Volunteers"
-    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Organization', 'Status'])
-    for x in volunteers:
-        x['Email'] = executeSQL(fr"select Email from Users where CNIC='{x['CNIC']}'", ['Email'])[0]['Email']
+    sql = fr"SELECT Volunteers.CNIC, DeptID, Name, Age, Sex, JoinDate, ContractEndDate, Phone, Organization, Status, Email FROM Volunteers inner join Users where Volunteers.CNIC = Users.CNIC"
+    volunteers = executeSQL(sql, ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone', 'Organization', 'Status', 'Email'])
+    # for x in volunteers:
+    #     x['Email'] = executeSQL(fr"select Email from Users where CNIC='{x['CNIC']}'", ['Email'])[0]['Email']
 
     return render(request, 'myadmin/volunteers_list.html', {"volunteers":volunteers, "titles": list(volunteers[0].keys()), "nav": navname}) 
 
