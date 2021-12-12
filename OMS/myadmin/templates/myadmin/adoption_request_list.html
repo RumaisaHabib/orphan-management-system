@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                         {% for request in requests %}
-                            <tr class="hoverable-record" id="n{{request.ApplicationID}}">
+                            <tr class="hoverable-record" id="n{{request.ApplicationID}}" style="display: none;">
                                 {% for key, value in request.items %}
                                     <td>{{value}}</td>
                                 {% endfor %}
@@ -48,6 +48,7 @@
                     </tbody>
                 </table>
             </div>
+            <a href="#" id="load", class="customButton">Load More</a>
         </div>
     </div>
 </body>
@@ -56,6 +57,16 @@
         var myid = $(this).attr('id').replace('#', '').replace('n', '');
         window.location.replace("updaterequest/" + myid);
     });
+    $(function(){
+    $("tr").slice(0, 10).show(); // select the first ten
+    $("#load").click(function(e){ // click event for load more
+        e.preventDefault();
+        $("tr:hidden").slice(0, 10).show(); // select next 10 hidden rows and show them
+        if($("tr:hidden").length == 0){ // check if any hidden rows still exist
+            alert("No more to view"); // alert if there are none left
+        }
+    });
+});
 </script>
 
 {% endblock %}

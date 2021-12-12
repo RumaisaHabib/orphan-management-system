@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                         {% for res in result %}
-                            <tr class="hoverable-record" id="n{{dept.CNIC}}">
+                            <tr class="hoverable-record" id="n{{dept.CNIC}}" style="display: none;">
                                 {% for key, value in res.items %}
                                     <td>{{value}}</td>
                                 {% endfor %}
@@ -55,8 +55,21 @@
 
                 </table>
             </div>
+            <a href="#" id="load", class="customButton">Load More</a>
         </div>
     </div>
 </body>
 
+<script>
+    $(function(){
+    $("tr").slice(0, 10).show(); // select the first ten
+    $("#load").click(function(e){ // click event for load more
+        e.preventDefault();
+        $("tr:hidden").slice(0, 10).show(); // select next 10 hidden rows and show them
+        if($("tr:hidden").length == 0){ // check if any hidden rows still exist
+            alert("No more to view"); // alert if there are none left
+        }
+    });
+});
+</script>
 {% endblock %}
