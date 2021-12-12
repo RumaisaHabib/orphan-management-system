@@ -252,7 +252,7 @@ def update_employee(request, employeeid):
     utype = request.session.get('usertype')
     if utype != 'admin':
         return render(request, 'myadmin/not_admin.html', {"nav": which_nav(request)})
-        
+    
     return render(request, 'myadmin/update_employee.html', {"result":result[0],"titles": list(result[0].keys()), "nav": which_nav(request)})
 
 def update_record_e(request):
@@ -268,6 +268,7 @@ def update_record_e(request):
         end=request.POST["EndDate"]
         email=request.POST["email"]
         dept=request.POST["deptid"]
+        prevdept=request.POST["prevdeptid"]
         salary=request.POST["salary"]
         phone=request.POST["phone"]
         dob=request.POST["dateofbirth"]
@@ -276,7 +277,21 @@ def update_record_e(request):
     # ['CNIC', 'DeptID', 'Name', 'Age', 'Sex', 'JoinDate', 'ContractEndDate', 'Phone','Email',  'Organization']
         sql = fr"Update Employees set Name='{Name}', DeptID='{dept}', DateOfBirth='{dob}', JoinDate='{join}', ContractEndDate='{end}', Email='{email}', Salary='{salary}', Phone='{phone}' where CNIC='{CNIC}';"
         executeSQL(sql)
-    
+        
+        sql = fr"SELECT NumberOfEmployees FROM Department WHERE DeptID='{dept}'"
+        total = int(executeSQL(sql, ['numberofemployees'])[0]['numberofemployees'])
+        total = total + 1
+        strdept = str(dept)
+        sql = f"UPDATE Department SET NumberOfEmployees = {total} WHERE DeptID='{strdept}'"
+        executeSQL(sql)
+
+        sql = fr"SELECT NumberOfEmployees FROM Department WHERE DeptID='{prevdept}'"
+        total = int(executeSQL(sql, ['numberofemployees'])[0]['numberofemployees'])
+        total = total - 1
+        strdept = str(prevdept)
+        sql = f"UPDATE Department SET NumberOfEmployees = {total} WHERE DeptID='{strdept}'"
+        executeSQL(sql)
+
     return redirect('/myadmin/view/employeeslist/')
 
 def adoption_request_list(request):
