@@ -475,6 +475,12 @@ def add_employee(request):
         print([x for x in request.POST.items()])
         try:
             executeSQL(sql)
+            sql = fr"SELECT NumberOfEmployees FROM Department WHERE DeptID='{dept}'"
+            total = int(executeSQL(sql, ['numberofemployees'])[0]['numberofemployees'])
+            total = total + 1
+            strdept = str(dept)
+            sql = f"UPDATE Department SET NumberOfEmployees = {total} WHERE DeptID='{strdept}'"
+            executeSQL(sql)
         except:
             return render(request, 'myadmin/cnic_exists.html', {"nav": which_nav(request)})
         
