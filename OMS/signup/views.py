@@ -44,7 +44,7 @@ def signupVolunteer(request):
         print("you're already logged in")
         # another page rendered instead: to be made.
         return redirect('home:index') 
-    return render(request, "signup/signup.html")
+    return render(request, "signup/successfulsignup.html")
 
 
 
@@ -82,8 +82,6 @@ def signupParent(request):
         except Exception as e:
             print('ERROR SIGNING UP', e)
             return render(request, 'signup/signuperror.html', {'nav':which_nav(request)})
-
-        return redirect('/')
 
     if request.session.get("logged_in")==1:
             print("you're already logged in")
