@@ -165,5 +165,25 @@
     $('select').formSelect();
   });
 
+  $('form').on('submit', function() {
+
+    var valid = true;
+    invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "=", ";"];
+    
+    $('form input').each(function() {
+      for(let x in invalidStrings)
+      {
+        if (this.value.includes(x))
+        {
+          alert("Invalid input. Sql injection, i see. xD");
+          valid = false;
+          return false;
+        }
+      }
+    });
+
+    return valid;
+  });
+
 </script>
 {% endblock %}

@@ -24,8 +24,12 @@
                   <label for="email">Email</label>
                 </div>
                 <div class="input-field col s12">
+                  <input type="hidden" id="prevdeptid" name="prevdeptid" value="{{result.DeptID}}">          
+                  <span><b>Previous Dept</b> {{result.DeptID}}</span>
+                </div>
+                <div class="input-field col s12">
                   <input name="deptid" id="deptid" type="number" value="{{result.DeptID}}">
-                  <label for="deptid">Dept ID</label>
+                  <label for="deptid">New Dept ID</label>
                 </div>
                 <div class="input-field col s12">
                   <label style="margin-top: -20px;">Join Date</label>
