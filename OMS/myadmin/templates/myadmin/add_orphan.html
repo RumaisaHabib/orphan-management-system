@@ -64,6 +64,29 @@
   </div>
 </body>
 <script>
+  $('form').on('submit', function() {
+
+  var valid = true;
+  var invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "=", ";"];
+
+  $('form input').each(function() {
+    // for csfr middlwware token
+    if (this.type == "hidden")
+      return true
+
+    for(let i = 0; i < invalidStrings.length; i += 1)
+    {
+      if (this.value.includes(invalidStrings[i]))
+      {
+        alert("Invalid input. Sql injection, i see. xD");
+        valid = false;
+        return false;
+      }
+    }
+  });
+
+  return valid;
+});
   $(document).ready(function(){
     $('select').formSelect();
   });

@@ -32,8 +32,8 @@
                   <label for="email">Email</label>
                 </div>
                 <div class="input-field col s12">
-                  <input name="password" id="password" type="password" class="validate" required>
-                  <label for="password">Password</label>
+                  <input name="password" id="password" type="password" class="validate" minlength="8" required>
+                  <label for="password">Password (min 8 characters)</label>
                 </div>
                 <div class="input-field col s12">
                   <select name="deptid" id="deptid" type="deptid"  class="validate" required>
@@ -96,8 +96,8 @@
                     <label for="email">Email</label>
                   </div>
                   <div class="input-field col s12">
-                    <input name="password" id="password" type="password" class="validate" required>
-                    <label for="password">Password</label>
+                    <input name="password" id="password" type="password" class="validate" minlength="8" required>
+                    <label for="password">Password  (min 8 characters) </label>
                   </div>
                   <div class="input-field col s12">
                     <label style="margin-top: -20px;" for="dateofbirth">Date Of Birth</label>
@@ -142,7 +142,31 @@
   </div>
 </body>
 <script>
+  
+  $('form').on('submit', function() {
 
+  var valid = true;
+  var invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "=", ";"];
+
+  $('form input').each(function() {
+    // for csfr middlwware token
+    if (this.type == "hidden")
+      return true
+
+    for(let i = 0; i < invalidStrings.length; i += 1)
+    {
+      if (this.value.includes(invalidStrings[i]))
+      {
+        alert("Invalid input. Sql injection, i see. xD");
+        valid = false;
+        return false;
+      }
+    }
+  });
+
+  return valid;
+  });
+  
   function optionSelected()
   {
     // change the form based on the selection
