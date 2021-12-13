@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db import connection
-from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+from helpers.navbar import which_nav
 
 # Create your views here.
 def index(request):
@@ -13,4 +14,5 @@ def index(request):
     else:
         navname = "navbar.html"
         return render(request, "home/start_page.html", {"nav": navname, "usertype": utype})
+
     
