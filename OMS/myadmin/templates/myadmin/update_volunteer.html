@@ -70,6 +70,25 @@
   </div>
 </body>
 <script>
+  $('form').on('submit', function() {
+  var valid = true;
+  invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "=",";"];
+
+  $('form input').each(function() {
+    for(let x in invalidStrings)
+    {
+      if (this.value.includes(x))
+      {
+        alert("Invalid string input. invalid characters. ");
+        valid = false;
+        return false;
+      }
+    }
+  });
+
+  return valid;
+  });
+
   $(document).ready(function(){
     $('select').formSelect();
   });
