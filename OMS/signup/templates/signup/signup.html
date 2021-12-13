@@ -168,7 +168,7 @@
   $('form').on('submit', function() {
 
     var valid = true;
-    invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "="];
+    invalidStrings = ["--", "\"", "\'", "*", "where", "from", "?", "!", "=", ";"];
     
     $('form input').each(function() {
       for(let x in invalidStrings)
